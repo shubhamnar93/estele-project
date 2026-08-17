@@ -1,3 +1,4 @@
+import { Select } from "@/components/Select";
 import { Card, CardContent } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -68,9 +69,12 @@ export const Form = () => {
                     <div className="grid gap-4 sm:grid-cols-2 ">
                         <InputWithLabel text="Price" placeholder="999..." />
                         <InputWithLabel text="Stock" placeholder="999..." />
+                        <SelectWithLabel text="Category" />
+                        <SelectWithLabel text="Collection" />
                     </div>
                     <InputWithLabel text="Image Url" placeholder="https://..." />
                     <InputWithLabel text="Description" placeholder="description..." />
+
                     <FormButton />
                 </form>
             </div>
@@ -93,6 +97,16 @@ export const InputWithLabel = ({ text, placeholder }: { text: string, placeholde
                 {text}
             </label>
             <input className="flex h-9 w-full rounded-md border-1 border-neutral-300 bg-transparent px-3 py-1 text-base shadow-sm transition-colors" placeholder={placeholder} />
+        </div>
+    )
+}
+export const SelectWithLabel = ({ text, }: { text: string, }) => {
+    return (
+        <div className="space-y-2">
+            <label className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+                {text}
+            </label>
+            <Select />
         </div>
     )
 }
