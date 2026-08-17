@@ -1,4 +1,5 @@
 import { Heart, MapPin, Search, ShoppingBasket, UserRound } from "lucide-react"
+import { Link } from "@inertiajs/react"
 
 
 import {
@@ -13,18 +14,18 @@ export const Header = () => {
         <header className="pt-[15px] pb-[27px] px-[30px] bg-white/90 backdrop-blur-lg">
             <div className="grid grid-cols-3 items-center">
                 <div>
-                    <a href="">
-                        <p className="flex text-[16px] gap-[2px] items-center text-neutral-600">
+                    <Link href="">
+                        <p className="flex cursor-not-allowed text-[16px] gap-[2px] items-center text-neutral-600">
                             <MapPin height={16} />
                             store locator
                         </p>
-                    </a>
+                    </Link>
                 </div>
                 <div className="flex items-center justify-center">
-                    <a href="">
+                    <Link href="/">
                         <img className={"h-[50px] w-[90px]"} src="https://estele.co/cdn/shop/files/estele-logo-200--80_160x_160x_5902a255-6c63-4705-af1e-836e5585dedb.png?v=1747398696&width=180">
                         </img>
-                    </a>
+                    </Link>
                 </div>
                 <div className="flex items-center text-neutral-600 gap-3 justify-end">
                     <InputGroup className="max-w-xs h-[40px]">
@@ -33,7 +34,6 @@ export const Header = () => {
                             <Search />
                         </InputGroupAddon>
                     </InputGroup>
-                    <Heart />
                     <ShoppingBasket />
                     <UserRound />
                 </div>
