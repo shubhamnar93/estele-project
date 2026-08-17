@@ -1,0 +1,87 @@
+const collections = [
+    {
+        title: "₹999",
+        href: "/collections/under-999",
+        image:
+            "https://estele.co/cdn/shop/files/Path_84397_2x_c51eb4f5-4c4f-4ee3-a489-d5daec626af9.png?v=1747328297",
+    },
+    {
+        title: "₹1,499",
+        href: "/collections/under-1999",
+        image:
+            "https://estele.co/cdn/shop/files/Path_84397_2x_c51eb4f5-4c4f-4ee3-a489-d5daec626af9.png?v=1747328297",
+    },
+    {
+        title: "₹2,999",
+        href: "/collections/under-2999",
+        image:
+            "https://estele.co/cdn/shop/files/Path_84397_2x_c51eb4f5-4c4f-4ee3-a489-d5daec626af9.png?v=1747328297",
+    },
+    {
+        title: "Pearls",
+        href: "/collections/pearl-collection",
+        image:
+            "https://estele.co/cdn/shop/files/Mask_Group_406_2x_02f982e3-943b-4bbb-ba34-450e126d2bc5.png?v=1747328554",
+    },
+];
+
+function CollectionCard({
+    title,
+    href,
+    image,
+}: {
+    title: string;
+    href: string;
+    image: string;
+}) {
+    return (
+        <a href={href} className="group block">
+            <div className="h-[120px]">
+                <img
+                    src={image}
+                    alt={title}
+                    loading="lazy"
+                    className="aspect-square w-[150px] h-[115px] object-cover transition-transform duration-500 group-hover:scale-105"
+                />
+            </div>
+
+            <div className="mt-3 text-center">
+                <h3 className="text-sm font-medium">
+                    {title}
+                </h3>
+
+                <p className="mt-1 text-xs text-gray-500">
+                    0 Products
+                </p>
+            </div>
+        </a>
+    );
+}
+
+export default function BlingBanner() {
+    return (
+        <section className="mb-[50px] mt-12 md:mb-[50px] h-fit">
+            <div className="mx-auto justify-around flex items-center gap-y-8 max-w-7xl px-4 md:px-6" >
+                {/* Heading */}
+                <div className="mb-[30px] text-center">
+                    <p className="text-xl">
+                        Your Budget,
+                    </p>
+                    <p className="text-xl">
+                        <b>Your Bling</b>
+                    </p>
+                </div>
+
+                {/* Collections */}
+                <div className="grid grid-cols-2 gap-x-2.5 gap-y-2.5 md:grid-cols-2 md:gap-x-[30px] md:gap-y-[30px] lg:grid-cols-4">
+                    {collections.map((collection) => (
+                        <CollectionCard
+                            key={collection.href}
+                            {...collection}
+                        />
+                    ))}
+                </div>
+            </div>
+        </section>
+    );
+}

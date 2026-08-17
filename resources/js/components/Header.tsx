@@ -10,7 +10,7 @@ import {
 const navs = [{ title: "hasli collection", }, { title: "crystal blooms", }, { title: "best seller", }]
 export const Header = () => {
     return (
-        <header className="pt-[15px] pb-[27px] px-[30px] bg-white ">
+        <header className="pt-[15px] pb-[27px] px-[30px] bg-white/90 backdrop-blur-lg">
             <div className="grid grid-cols-3 items-center">
                 <div>
                     <a href="">
@@ -42,7 +42,7 @@ export const Header = () => {
                 <nav >
                     <ul className="flex justify-between">
                         {navs.map((n) =>
-                            <li className="hover:bg-gray-100 py-2 w-full flex justify-center uppercase text-neutral-600">
+                            <li className="hover:bg-gray-100/90 py-2 w-full flex justify-center uppercase text-neutral-600">
                                 {n.title}
                             </li>
                         )

@@ -1,7 +1,10 @@
-import { Banner } from "@/components/Banner"
-import { Header } from "@/components/Header"
+import FeaturedProducts from "@/components/FeaturedProducts";
+import FeaturedCollection from "@/components/FeaturedCollection";
 import { ImageCarousel } from "@/components/ImageCarousel"
+import { RoseGoldCollection } from "@/components/RoseGoldCollection";
 import CategoryCarousel from "@/components/ShopBy"
+import BlingBanner from "@/components/BlingBanner";
+import Layout from "../Layout";
 
 
 const categories = [
@@ -63,16 +66,17 @@ const categories = [
 
 export default function Index() {
     return (
-        <>
-            <div className="top-0 sticky z-9999">
-                <Banner />
-                <Header />
-            </div>
-            <main>
+        <Layout>
+            <main className="">
                 <ImageCarousel />
                 <CategoryCarousel heading="Shop By Category" categories={categories} />
+                <RoseGoldCollection />
+                <FeaturedCollection />
                 <CategoryCarousel heading="Shop By collections" categories={categories} />
+                <FeaturedProducts />
+                <BlingBanner />
+                <FeaturedProducts />
             </main>
-        </>
+        </Layout>
     )
 }
