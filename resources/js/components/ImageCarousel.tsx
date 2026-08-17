@@ -2,6 +2,44 @@ import { ArrowLeftIcon, ArrowRightIcon } from "lucide-react";
 import { useEffect, useState } from "react";
 
 const AUTOPLAY_MS = 8500;
+const slides = [
+    {
+        image:
+            "https://estele.co/cdn/shop/files/Freedom_Fest_Creatives_Banner_jpg.jpg?format=pjpg&v=1785915712&width=2612",
+        link: "/collections/freedom-sale-flat-50",
+        alt: "Freedom Fest — Flat 50",
+    },
+    {
+        image:
+            "https://estele.co/cdn/shop/files/Rakshabandhan_Banner_Creative_2612-1080-morbagh_creative.jpg_1.jpg?format=pjpg&v=1785494658&width=2612",
+        link: "/collections/rakhi-gifting-guide",
+        alt: "Rakshabandhan Gifting Guide",
+    },
+    {
+        image:
+            "https://estele.co/cdn/shop/files/banner.jpg_3.jpg?format=pjpg&v=1785220320&width=2612",
+        link: "/collections/rakhi",
+        alt: "Rakhi Collection",
+    },
+    {
+        image:
+            "https://estele.co/cdn/shop/files/Hasli_Collection_Banner-2_jpg.jpg?format=pjpg&v=1784201314&width=2612",
+        link: "/collections/hasli-collection",
+        alt: "Hasli Collection",
+    },
+    {
+        image:
+            "https://estele.co/cdn/shop/files/Banner.jpg_2.jpg?format=pjpg&v=1780052350&width=2612",
+        link: "/collections/sitara",
+        alt: "Sitara Collection",
+    },
+    {
+        image:
+            "https://estele.co/cdn/shop/files/Banner.jpg_1_54ef9678-0bf5-4964-a1a1-e441f615f57e.jpg?format=pjpg&v=1778837912&width=2612",
+        link: "/collections/maharani-collection",
+        alt: "Maharani Collection",
+    },
+];
 
 export default function Slideshow({ slides = [] }: { slides: { image: string, link: string, alt: string }[] }) {
     const [index, setIndex] = useState(0);
@@ -83,45 +121,6 @@ export default function Slideshow({ slides = [] }: { slides: { image: string, li
         </section>
     );
 }
-
-const slides = [
-    {
-        image:
-            "https://estele.co/cdn/shop/files/Freedom_Fest_Creatives_Banner_jpg.jpg?format=pjpg&v=1785915712&width=2612",
-        link: "/collections/freedom-sale-flat-50",
-        alt: "Freedom Fest — Flat 50",
-    },
-    {
-        image:
-            "https://estele.co/cdn/shop/files/Rakshabandhan_Banner_Creative_2612-1080-morbagh_creative.jpg_1.jpg?format=pjpg&v=1785494658&width=2612",
-        link: "/collections/rakhi-gifting-guide",
-        alt: "Rakshabandhan Gifting Guide",
-    },
-    {
-        image:
-            "https://estele.co/cdn/shop/files/banner.jpg_3.jpg?format=pjpg&v=1785220320&width=2612",
-        link: "/collections/rakhi",
-        alt: "Rakhi Collection",
-    },
-    {
-        image:
-            "https://estele.co/cdn/shop/files/Hasli_Collection_Banner-2_jpg.jpg?format=pjpg&v=1784201314&width=2612",
-        link: "/collections/hasli-collection",
-        alt: "Hasli Collection",
-    },
-    {
-        image:
-            "https://estele.co/cdn/shop/files/Banner.jpg_2.jpg?format=pjpg&v=1780052350&width=2612",
-        link: "/collections/sitara",
-        alt: "Sitara Collection",
-    },
-    {
-        image:
-            "https://estele.co/cdn/shop/files/Banner.jpg_1_54ef9678-0bf5-4964-a1a1-e441f615f57e.jpg?format=pjpg&v=1778837912&width=2612",
-        link: "/collections/maharani-collection",
-        alt: "Maharani Collection",
-    },
-];
 
 export function ImageCarousel() {
 
