@@ -123,6 +123,5 @@ export default function Slideshow({ slides = [] }: { slides: { image: string, li
 }
 
 export function ImageCarousel() {
-
     return <Slideshow slides={slides} />;
 }
