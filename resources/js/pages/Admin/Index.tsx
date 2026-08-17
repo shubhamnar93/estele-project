@@ -1,7 +1,7 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Layers, Package, Pencil, Plus, SquareArrowRightExit, Tag, Trash2 } from "lucide-react";
+import { Layers, Package, Pencil, Plus, SquareArrowRightExit, Tag, Trash2, X } from "lucide-react";
 import { ReactNode } from "react";
 
 export default function Admin() {
@@ -48,8 +48,52 @@ export default function Admin() {
                     </div>
                 </Tabs>
             </main>
+            <Form />
         </div>
 
+    )
+}
+export const Form = () => {
+    return (
+        <div className="fixed inset-0 z-50 bg-black/80">
+            <div className="fixed overflow-y-auto sm:max-w-lg sm:rounded-lg max-h-[90vh] bg-[#fef8fa] border-[#e7dbd8] left-[50%] top-[50%] z-50 grid w-full max-w-lg translate-x-[-50%] translate-y-[-50%] gap-4 p-6 shadow-lg duration-200">
+                <div className="flex flex-col space-y-1.5 text-center sm:text-left">
+                    <h2 className="font-semibold tracking-tight font-serif text-2xl">Edit product</h2>
+                    <p className="text-[#796360] text-sm">Product details shown on the storefront.</p>
+                </div>
+                <button className="absolute right-4 top-4 rounded-sm opacity-70 "><X /></button>
+
+                <form className="space-y-4">
+                    <InputWithLabel text="Name" placeholder="name..." />
+                    <div className="grid gap-4 sm:grid-cols-2 ">
+                        <InputWithLabel text="Price" placeholder="999..." />
+                        <InputWithLabel text="Stock" placeholder="999..." />
+                    </div>
+                    <InputWithLabel text="Image Url" placeholder="https://..." />
+                    <InputWithLabel text="Description" placeholder="description..." />
+                    <FormButton />
+                </form>
+            </div>
+        </div>
+    )
+}
+export const FormButton = () => {
+    return (
+        <div className="flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-2 pt-2">
+            <button className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium cursor-pointer transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 disabled:cursor-not-allowed [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0  shadow-sm h-9 px-4 py-2 border-neutral-300 border-1 bg-transparent"> Cancel</button>
+            <button className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm text-white font-medium cursor-pointer transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 disabled:cursor-not-allowed [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0  shadow-sm h-9 px-4 py-2 border-neutral-300 border-1 bg-[#9c3348]"> Add</button>
+
+        </div>
+    )
+}
+export const InputWithLabel = ({ text, placeholder }: { text: string, placeholder: string }) => {
+    return (
+        <div className="space-y-2">
+            <label className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+                {text}
+            </label>
+            <input className="flex h-9 w-full rounded-md border-1 border-neutral-300 bg-transparent px-3 py-1 text-base shadow-sm transition-colors" placeholder={placeholder} />
+        </div>
     )
 }
 
@@ -72,36 +116,30 @@ export const TableCard = () => {
             {
                 id: "prd-1",
                 name: "Velvet Matte Lipstick — Rosewood",
-                sku: "EST-LIP-001",
                 price: 599,
                 stock: 128,
                 categoryId: "cat-lips",
                 collectionId: "col-bestsellers",
-                status: "active",
                 imageUrl: "",
                 description: "Weightless matte colour with 10-hour wear.",
             },
             {
                 id: "prd-2",
                 name: "Intense Kajal — Jet Black",
-                sku: "EST-EYE-014",
                 price: 299,
                 stock: 340,
                 categoryId: "cat-eyes",
                 collectionId: "col-bestsellers",
-                status: "active",
                 imageUrl: "",
                 description: "Smudge-proof, waterproof definition.",
             },
             {
                 id: "prd-3",
                 name: "Glow Serum Foundation — Beige",
-                sku: "EST-FCE-072",
                 price: 899,
                 stock: 42,
                 categoryId: "cat-face",
                 collectionId: "col-newin",
-                status: "draft",
                 imageUrl: "",
                 description: "Skin-loving hydration with medium coverage.",
             },
@@ -128,7 +166,6 @@ export const TableCard = () => {
                             <TableRow key={p.id}>
                                 <TableCell>
                                     <div className="font-medium">{p.name}</div>
-                                    <div className="text-xs text-muted-foreground">{p.sku}</div>
                                 </TableCell>
                                 <TableCell>{nameOf(seed.categories, p.categoryId)}</TableCell>
                                 <TableCell>{nameOf(seed.collections, p.collectionId)}</TableCell>

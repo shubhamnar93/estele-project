@@ -32,7 +32,6 @@ interface UspItem {
 
 const PRODUCT = {
     title: "Dazzle Petal Bangles Size-2.6",
-    sku: "AD-058-RGWE26 BANGLE",
     collection: "Sitara Crystal Bloom Collection",
     price: 2650,
     compareAt: 5299,
@@ -635,11 +634,6 @@ export default function ProductPage() {
                                 </button>
                             </div>
                         </div>
-
-                        {/* SKU */}
-                        <p className="text-sm text-neutral-500">
-                            SKU: <span className="text-neutral-700">{PRODUCT.sku}</span>
-                        </p>
 
                         {/* Price + review */}
                         <div className="flex flex-wrap items-center gap-3 pt-2">
