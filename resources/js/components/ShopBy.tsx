@@ -30,7 +30,9 @@ export default function CategoryCarousel({ heading, categories }: { heading: str
     }, [pageCount, page]);
 
 
+
     return (
+
         <section className="py-4 mt-12 my-2.5 mx-auto">
             <div className="max-w-[1600px] mx-auto px-4">
                 {/* heading */}
