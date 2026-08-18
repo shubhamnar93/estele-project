@@ -14,12 +14,23 @@ class HomeController extends Controller
  public function index(): Response
     {
         $latestProducts = Product::with(['category', 'collection'])
+            ->whereHas('collection', function ($query) {
+                $query->where('name', 'New Arrivals');
+            })
             ->latest()
             ->take(4)
             ->get();
+        $bestSeller = Product::with(['category', 'collection'])
+            ->whereHas('collection', function ($query) {
+                $query->where('name', 'Best Sellers');
+            })
+            ->latest()
+            ->take(4)
+            ->get();
+
         $featuredProducts = Product::with(['category', 'collection'])
-            ->whereHas('category', function ($query) {
-                $query->where('is_featured', true);
+            ->whereHas('collection', function ($query) {
+                $query->where('name', 'Premium Edit');
             })
             ->latest()
             ->take(4)
@@ -31,6 +42,7 @@ class HomeController extends Controller
         return Inertia::render('Home/Index', [
             'featuredProducts' => $featuredProducts,
             'latestProducts' => $latestProducts,
+            'bestSellers' => $bestSeller,
             'categories' => $categories,
             'collections' => $collections,
         ]);

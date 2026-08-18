@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { Category } from "@/lib/data";
+import { Collection } from "@/types/collection";
 
 function usePerView() {
     // 8 on desktop, 3 on tablet, 2 on mobile — matches the source
@@ -17,7 +17,7 @@ function usePerView() {
     return perView;
 }
 
-export default function CategoryCarousel({ heading, categories }: { heading: string, categories: Category[] }) {
+export default function CategoryCarousel({ heading, categories, catOrCol }: { catOrCol: "category" | "collection", heading: string, categories: Collection[] }) {
     const perView = usePerView();
     const trackRef = useRef(null);
     const [page, setPage] = useState(0);
@@ -58,7 +58,7 @@ export default function CategoryCarousel({ heading, categories }: { heading: str
                         {categories.map((c) => (
                             <a
                                 key={c.id}
-                                href={`/collections/${c.slug}`}
+                                href={`/collections/${c.id}`}
                                 className="group block shrink-0 min-w-0 text-center"
                             >
                                 {/* image — 2:3 portrait, rounded 8% like source */}
@@ -67,7 +67,7 @@ export default function CategoryCarousel({ heading, categories }: { heading: str
                                     style={{ aspectRatio: "2 / 3", borderRadius: "8%" }}
                                 >
                                     <img
-                                        src={c.imgUrl}
+                                        src={c.imageurl}
                                         alt={c.name}
                                         loading="lazy"
                                         className="w-[115px] h-full object-cover transition-transform duration-500 group-hover:scale-105"
@@ -76,10 +76,10 @@ export default function CategoryCarousel({ heading, categories }: { heading: str
                                 {/* caption */}
                                 <div className="pt-3 pb-1">
                                     <span className="block text-[13px] text-[#222] group-hover:text-black">
-                                        Collection
+                                        {catOrCol}
                                     </span>
                                     <span className="block text-[11px] text-[#878787] mt-0.5">
-                                        <span>0</span> Products
+                                        <span>{c.count}</span> Products
                                     </span>
                                 </div>
                             </a>

@@ -1,14 +1,15 @@
-import { MapPin, Search, ShoppingBasket, UserRound } from "lucide-react"
-import { Link } from "@inertiajs/react"
+import { MapPin, Search, ShoppingBasket, SquareArrowRightExit, UserRound } from "lucide-react"
+import { Link, usePage } from "@inertiajs/react"
 import {
     InputGroup,
     InputGroupAddon,
     InputGroupInput,
 } from "@/components/ui/input-group"
+import { Collection } from "@/lib/data"
 
 const navs = [{ title: "hasli collection", }, { title: "crystal blooms", }, { title: "best seller", }]
 export const Header = () => {
-
+    const { auth, collections } = usePage().props;
     return (
         <header className="pt-[15px] pb-[27px] px-[30px] bg-white/90 backdrop-blur-lg">
             <div className="grid grid-cols-3 items-center">
@@ -34,17 +35,24 @@ export const Header = () => {
                         </InputGroupAddon>
                     </InputGroup>
                     <ShoppingBasket />
-                    <Link href={"/signup"}>
-                        <UserRound />
-                    </Link>
+                    {(auth as any).user ?
+
+                        <Link href={"/logout"}>
+                            <SquareArrowRightExit />
+                        </Link>
+                        :
+                        <Link href={"/signup"}>
+                            <UserRound />
+                        </Link>
+                    }
                 </div>
             </div>
             <div className="mt-[24px] flex-1">
                 <nav >
                     <ul className="flex justify-between">
-                        {navs.map((n) =>
-                            <li className="hover:bg-gray-100/90 py-2 w-full flex justify-center uppercase text-neutral-600">
-                                {n.title}
+                        {(collections as Collection[]).map((n, idx) =>
+                            <li key={`collections-${idx}`} className="hover:bg-gray-100/90 py-2 w-full flex justify-center uppercase text-[8px] md:text-xs text-neutral-600">
+                                {n.name}
                             </li>
                         )
                         }

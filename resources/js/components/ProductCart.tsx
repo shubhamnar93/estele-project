@@ -1,20 +1,19 @@
-import { Product } from "@/lib/data";
-import { Heart } from "lucide-react";
+import { Product } from "@/types/product";
 
 
 export default function ProductCard({ product }: { product: Product }) {
     return (
         <article className="group">
             <div className="relative overflow-hidden">
-                <a href={product.href}>
+                <a href={"/"}>
                     <img
-                        src={product.imageUrls[0]}
-                        alt={product.title}
+                        src={product.images && product.images[0]}
+                        alt={product.name}
                         className="aspect-square w-full object-cover transition-opacity duration-300 group-hover:opacity-0"
                     />
 
                     <img
-                        src={product.imageUrls[1]}
+                        src={product.images && product.images.length > 1 ? product.images[1] : ""}
                         alt=""
                         className="absolute inset-0 aspect-square w-full object-cover opacity-0 transition-opacity duration-300 group-hover:opacity-100"
                     />
@@ -24,22 +23,11 @@ export default function ProductCard({ product }: { product: Product }) {
                 <span className="absolute left-3 top-3 bg-black px-2 py-1 text-xs text-white">
                     -50%
                 </span>
-
-                {/* Wishlist */}
-                <button
-                    type="button"
-                    aria-label="Add to Wishlist"
-                    className="absolute right-3 top-3 rounded-full bg-white p-2"
-                >
-                    <Heart size={17} strokeWidth={1.5} />
-                </button>
-
-                {/* Product actions */}
             </div>
 
             <div className="pt-3">
                 <h3 className="text-sm">
-                    <a href={product.href}>{product.title}</a>
+                    <a href={"/"}>{product.name}</a>
                 </h3>
 
                 <div className="mt-1 flex items-center gap-2">

@@ -135,6 +135,18 @@ class ProductSeeder extends Seeder
         Product::create([
             'category_id' => 4,
             'collection_id' => 5,
+            'name' => 'Crystal harmonal Ring',
+            'price' => 1799.00,
+            'count' => 9,
+            'description' => 'A refined solitaire-style ring with a clean and timeless design.',
+            'images' => [
+                'https://images.unsplash.com/photo-1617038220319-276d3cfab638?auto=format&fit=crop&w=800&q=80',
+                'https://images.unsplash.com/photo-1611652022419-a9419f74343d?auto=format&fit=crop&w=800&q=80',
+            ],
+        ]);
+        Product::create([
+            'category_id' => 4,
+            'collection_id' => 5,
             'name' => 'Classic Solitaire Ring',
             'price' => 2799.00,
             'count' => 9,
@@ -154,7 +166,7 @@ class ProductSeeder extends Seeder
             'description' => 'A stylish statement ring featuring a warm rose-gold finish.',
             'images' => [
                 'https://images.unsplash.com/photo-1598560917807-1bae44bd2be8?auto=format&fit=crop&w=800&q=80',
-                'https://images.unsplash.com/photo-1603561596112-db1d5b1e7c9a?auto=format&fit=crop&w=800&q=80',
+                'https://images.unsplash.com/photo-1598560917807-1bae44bd2be8?auto=format&fit=crop&w=800&q=80',
             ],
         ]);
 
@@ -252,13 +264,26 @@ class ProductSeeder extends Seeder
         Product::create([
             'category_id' => 9,
             'collection_id' => 4,
-            'name' => 'Traditional Maang Tikka',
             'price' => 1899.00,
+            'name' => 'Traditional Maang Tikka',
             'count' => 8,
             'description' => 'A traditional Maang Tikka designed to complement festive and bridal looks.',
             'images' => [
                 'https://images.unsplash.com/photo-1602173574767-37ac01994b2a?auto=format&fit=crop&w=800&q=80',
                 'https://images.unsplash.com/photo-1599643477877-530eb83abc8e?auto=format&fit=crop&w=800&q=80',
+            ],
+        ]);
+
+        Product::create([
+            'category_id' => 2,
+            'collection_id' => 4,
+            'name' => 'Silver Pendant',
+            'price' => 2299.00,
+            'count' => 10,
+            'description' => 'A charming heart-shaped pendant featuring a rich ruby-inspired centerpiece.',
+            'images' => [
+                'https://images.unsplash.com/photo-1535632787350-4e68ef0ac584?auto=format&fit=crop&w=800&q=80',
+                'https://images.unsplash.com/photo-1635767798638-3e25273a8236?auto=format&fit=crop&w=800&q=80',
             ],
         ]);
 
@@ -269,6 +294,19 @@ class ProductSeeder extends Seeder
             'price' => 3299.00,
             'count' => 6,
             'description' => 'A graceful bridal Maang Tikka featuring pearl-inspired embellishments.',
+            'images' => [
+                'https://images.unsplash.com/photo-1611652022419-a9419f74343d?auto=format&fit=crop&w=800&q=80',
+                'https://images.unsplash.com/photo-1605100804763-247f67b3557e?auto=format&fit=crop&w=800&q=80',
+            ],
+        ]);
+
+        Product::create([
+            'category_id' => 8,
+            'collection_id' => 3,
+            'name' => 'Velvet Luxe Necklace',
+            'price' => 299.00,
+            'count' => 22,
+            'description' => 'A stylish velvet choker designed for a bold and modern look.',
             'images' => [
                 'https://images.unsplash.com/photo-1611652022419-a9419f74343d?auto=format&fit=crop&w=800&q=80',
                 'https://images.unsplash.com/photo-1605100804763-247f67b3557e?auto=format&fit=crop&w=800&q=80',

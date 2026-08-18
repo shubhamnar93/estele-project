@@ -18,6 +18,8 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::post('/collections', [CollectionController::class, 'store']);
 Route::put('/collections/{collection}', [CollectionController::class, 'update'])
     ->name('collections.update');
+Route::get('/collections/{collection}', [CollectionController::class, 'show'])
+    ->name('collections.show');
 Route::delete('/collections/{collection}', [CollectionController::class, 'destroy']);
 
 //category routes

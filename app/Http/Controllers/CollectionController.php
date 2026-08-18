@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Collection;
 use Illuminate\Http\RedirectResponse;
+use App\Models\Product;
+use Inertia\Inertia;
+use Inertia\Response;
 
 class CollectionController extends Controller
 {
@@ -44,4 +47,17 @@ public function destroy(collection $collection)
 
     return redirect('/admin')->with('success', 'Category deleted!');
 }
+
+    public function show(Collection $collection): Response
+    {
+        $products = Product::with(['category', 'collection'])
+            ->where('collection_id', $collection->id)
+            ->latest()
+            ->get();
+
+        return Inertia::render('Shop/Index', [
+            "products" => $products,
+            "collection" => $collection
+        ]);
+    }
 }
