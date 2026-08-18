@@ -3,9 +3,19 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Layers, Package, Pencil, Plus, SquareArrowRightExit, Tag, Trash2, X } from "lucide-react";
-import { ReactNode } from "react";
+import { ReactNode, useState } from "react";
+type product = { name: string, price: number, stock: number, category: string, collection: string, imgUrl: string, description: string }
 
 export default function Admin() {
+    const [isOpen, setIsOpen] = useState(false)
+    const [title, setTitle] = useState("")
+    const [whatTo, setWhatTo] = useState<"products" | "collections" | "categories">("products")
+    const [product, setProduct] = useState({ name: "", price: 0, stock: 0, category: "", collection: "", imgUrl: "", description: "" })
+    const handleOnClick = ({ title, product }: { title: string, product?: product }) => {
+        if (whatTo == "products" && product) setProduct(product)
+        setIsOpen((o) => !o)
+        setTitle(title)
+    }
     return (
         <div className="bg-[#fef8fa] h-screen">
             <header className="bg-[#ffffff] border-b border-[#9ba2ae3b]">
@@ -22,7 +32,7 @@ export default function Admin() {
             </header>
             <main className="mx-auto max-w-6xl space-y-8 px-6 py-10">
                 <section className="grid gap-4 sm:grid-cols-3">
-                    <DataCard title="product" icon={<Package />} total={3} />
+                    <DataCard title="products" icon={<Package />} total={3} />
                     <DataCard title="collections" icon={<Layers />} total={3} />
                     <DataCard title="categories" icon={<Tag />} total={3} />
                 </section>
@@ -37,81 +47,85 @@ export default function Admin() {
                             <TabsContent value="products">
                                 <div className="flex w-full  items-center justify-between gap-3">
                                     <input placeholder="Search by name" className="flex max-w-xs h-9 w-full border-1 border-gray-200 rounded-md bg-transparent px-3 py-1 text-base shadow-sm transition-colors" />
-                                    <Button text="Add Products" />
+                                    <Button onClick={() => handleOnClick({ title: "Add Product", product: { name: "", price: 0, stock: 0, category: "", collection: "", imgUrl: "", description: "" } })} text="Add Products" />
                                 </div>
                                 <div className="  [&_*]:border-neutral-300 mt-8">
-                                    <TableCard />
+                                    <TableCard handleOnClick={({ title, product }: { title: string, product: product }) => handleOnClick({ title, product })} />
                                 </div>
                             </TabsContent>
-                            <TabsContent value="collections"><TableCard /></TabsContent>
-                            <TabsContent value="categories"><TableCard /></TabsContent>
+                            <TabsContent value="collections"><TableCard handleOnClick={handleOnClick} /></TabsContent>
+                            <TabsContent value="categories"><TableCard handleOnClick={handleOnClick} /></TabsContent>
                         </div>
                     </div>
                 </Tabs>
             </main>
-            <Form />
+            {isOpen && <Form title={title} onClose={() => handleOnClick({ title: "" })} >
+
+                <form className="space-y-4">
+                    <InputWithLabel text="Name" placeholder="name..." value={product.name} />
+                    <div className="grid gap-4 sm:grid-cols-2 ">
+                        <InputWithLabel text="Price" placeholder="999..." value={product.price} />
+                        <InputWithLabel text="Stock" placeholder="999..." value={product.stock} />
+                        <SelectWithLabel text="Category" value={product.category} />
+                        <SelectWithLabel text="Collection" value={product.collection} />
+                    </div>
+                    <InputWithLabel text="Image Url" placeholder="https://..." value={product.imgUrl} />
+                    <InputWithLabel text="Description" placeholder="description..." value={product.description} />
+
+                    <FormButton onClose={() => handleOnClick({ title: "" })} />
+                </form>
+            </Form>}
         </div>
 
     )
 }
-export const Form = () => {
+export const Form = ({ onClose, title, children }: { onClose: () => void, title: string, children?: ReactNode }) => {
     return (
         <div className="fixed inset-0 z-50 bg-black/80">
             <div className="fixed overflow-y-auto sm:max-w-lg sm:rounded-lg max-h-[90vh] bg-[#fef8fa] border-[#e7dbd8] left-[50%] top-[50%] z-50 grid w-full max-w-lg translate-x-[-50%] translate-y-[-50%] gap-4 p-6 shadow-lg duration-200">
                 <div className="flex flex-col space-y-1.5 text-center sm:text-left">
-                    <h2 className="font-semibold tracking-tight font-serif text-2xl">Edit product</h2>
+                    <h2 className="font-semibold tracking-tight font-serif text-2xl">{title}</h2>
                     <p className="text-[#796360] text-sm">Product details shown on the storefront.</p>
                 </div>
-                <button className="absolute right-4 top-4 rounded-sm opacity-70 "><X /></button>
+                <button onClick={onClose} className="cursor-pointer absolute right-4 top-4 rounded-sm opacity-70 ">
+                    <X />
+                </button>
+                {children}
 
-                <form className="space-y-4">
-                    <InputWithLabel text="Name" placeholder="name..." />
-                    <div className="grid gap-4 sm:grid-cols-2 ">
-                        <InputWithLabel text="Price" placeholder="999..." />
-                        <InputWithLabel text="Stock" placeholder="999..." />
-                        <SelectWithLabel text="Category" />
-                        <SelectWithLabel text="Collection" />
-                    </div>
-                    <InputWithLabel text="Image Url" placeholder="https://..." />
-                    <InputWithLabel text="Description" placeholder="description..." />
-
-                    <FormButton />
-                </form>
             </div>
         </div>
     )
 }
-export const FormButton = () => {
+export const FormButton = ({ onClose }: { onClose: () => void }) => {
     return (
         <div className="flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-2 pt-2">
-            <button className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium cursor-pointer transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 disabled:cursor-not-allowed [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0  shadow-sm h-9 px-4 py-2 border-neutral-300 border-1 bg-transparent"> Cancel</button>
+            <button onClick={onClose} className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium cursor-pointer transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 disabled:cursor-not-allowed [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0  shadow-sm h-9 px-4 py-2 border-neutral-300 border-1 bg-transparent"> Cancel</button>
             <button className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm text-white font-medium cursor-pointer transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 disabled:cursor-not-allowed [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0  shadow-sm h-9 px-4 py-2 border-neutral-300 border-1 bg-[#9c3348]"> Add</button>
-
         </div>
     )
 }
-export const InputWithLabel = ({ text, placeholder }: { text: string, placeholder: string }) => {
+export const InputWithLabel = ({ text, placeholder, value }: { text: string, placeholder: string, value?: string | number }) => {
     return (
         <div className="space-y-2">
             <label className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
                 {text}
             </label>
-            <input className="flex h-9 w-full rounded-md border-1 border-neutral-300 bg-transparent px-3 py-1 text-base shadow-sm transition-colors" placeholder={placeholder} />
+            <input value={value} className="flex h-9 w-full rounded-md border-1 border-neutral-300 bg-transparent px-3 py-1 text-base shadow-sm transition-colors" placeholder={placeholder} />
         </div>
     )
 }
-export const SelectWithLabel = ({ text, }: { text: string, }) => {
+export const SelectWithLabel = ({ text, value }: { text: string, value: string }) => {
     return (
         <div className="space-y-2">
             <label className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
                 {text}
             </label>
-            <Select />
+            <Select defaultValue={value} />
         </div>
     )
 }
 
-export const TableCard = () => {
+export const TableCard = ({ handleOnClick }: { handleOnClick: ({ title, product }: { title: string, product: product }) => void }) => {
     const nameOf = (list: { id: string; name: string }[], id: string) =>
         list.find((entry) => entry.id === id)?.name ?? "—";
     const seed = {
@@ -188,6 +202,17 @@ export const TableCard = () => {
                                 <TableCell>
                                     <div className="flex justify-end">
                                         <button
+                                            onClick={() => handleOnClick({
+                                                title: "Edit", product: {
+                                                    category: nameOf(seed.categories, p.categoryId) ?? "",
+                                                    collection: nameOf(seed.categories, p.categoryId) ?? "",
+                                                    description: p.description,
+                                                    imgUrl: p.imageUrl,
+                                                    name: p.name,
+                                                    price: p.price,
+                                                    stock: p.stock,
+                                                }
+                                            })}
                                             className=" hover:bg-neutral-100 inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium cursor-pointer transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 disabled:cursor-not-allowed [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 hover:bg-accent hover:text-accent-foreground h-9 w-9"
                                         >
                                             <Pencil className="text-neutral-500" />
@@ -234,9 +259,9 @@ export const DataCard = ({ title, icon, total }: { title: string, icon: ReactNod
         </div>
     )
 }
-export const Button = ({ text }: { text: string }) => {
+export const Button = ({ text, onClick }: { text: string, onClick: () => void }) => {
     return (
-        <button className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium cursor-pointer transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 disabled:cursor-not-allowed [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 h-9 px-4 py-2 shandow-md bg-[#9c3348] text-white hover:bg-[#9c3348e6]">
+        <button onClick={onClick} className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium cursor-pointer transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 disabled:cursor-not-allowed [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 h-9 px-4 py-2 shandow-md bg-[#9c3348] text-white hover:bg-[#9c3348e6]">
             <Plus />
             {text}
         </button>

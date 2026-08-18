@@ -1,9 +1,9 @@
 import { ChevronDown } from "lucide-react";
-export const Select = () => {
+export const Select = ({ defaultValue }: { defaultValue?: string }) => {
     return (
         <div className="relative w-full">
             <select
-                defaultValue=""
+                defaultValue={defaultValue ?? ""}
                 className="
                     flex h-9 w-full appearance-none
                     items-center justify-between
