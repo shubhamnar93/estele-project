@@ -36,4 +36,11 @@ public function update(Request $request, Category $category)
 
     return redirect('/admin')->with('success', 'collection updated!');
 }
+
+public function destroy(Category $category)
+{
+    $category->delete();
+
+    return redirect('/admin')->with('success', 'Product deleted!');
+}
 }

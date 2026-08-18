@@ -67,5 +67,11 @@ public function update(Request $request, Product $product)
 
     return redirect('/admin')->with('success', 'Product updated!');
 }
+public function destroy(Product $product)
+{
+    $product->delete();
+
+    return redirect('/admin')->with('success', 'Product deleted!');
+}
 
 }

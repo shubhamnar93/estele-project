@@ -8,9 +8,10 @@ import { Collection } from "@/types/collection";
 import { Product } from "@/types/product";
 import { Layers, Package, Pencil, Plus, SquareArrowRightExit, Tag, Trash2, X } from "lucide-react";
 import { ReactNode, useState } from "react";
-import { store as storeCollection, update as updateCollection } from '@/actions/App/Http/Controllers/CollectionController';
-import { store as storeCategory, update as updateCategory } from '@/actions/App/Http/Controllers/CategoryController';
-import { store as storeProduct, update as updateProduct } from '@/actions/App/Http/Controllers/ProductController';
+import { router } from "@inertiajs/react";
+import { store as storeCollection, update as updateCollection, destroy as destroyCollection } from '@/actions/App/Http/Controllers/CollectionController';
+import { store as storeCategory, update as updateCategory, destroy as destroyCategory } from '@/actions/App/Http/Controllers/CategoryController';
+import { store as storeProduct, update as updateProduct, destroy as destroyProduct } from '@/actions/App/Http/Controllers/ProductController';
 import { Form as IntertiaForm } from "@inertiajs/react";
 
 const nameOf = (list: { id: number; name: string }[], id: number) =>
@@ -226,6 +227,9 @@ export const TableCardProducts = ({ handleOnClick, products, categories, collect
 
                                         </button>
                                         <button
+                                            onClick={() => {
+                                                router.delete(destroyProduct(p.id).url);
+                                            }}
                                             className="hover:bg-red-100 inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium cursor-pointer transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 disabled:cursor-not-allowed [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 hover:bg-accent hover:text-accent-foreground h-9 w-9"
                                         >
                                             <Trash2 className="text-red-500" />
@@ -291,6 +295,10 @@ export const TableCardCollection = ({ handleOnClick, collections, }: { collectio
 
                                         </button>
                                         <button
+
+                                            onClick={() => {
+                                                router.delete(destroyCollection(p.id).url);
+                                            }}
                                             className="hover:bg-red-100 inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium cursor-pointer transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 disabled:cursor-not-allowed [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 hover:bg-accent hover:text-accent-foreground h-9 w-9"
                                         >
                                             <Trash2 className="text-red-500" />
@@ -356,6 +364,10 @@ export const TableCardCategory = ({ handleOnClick, categories, }: { categories: 
 
                                         </button>
                                         <button
+
+                                            onClick={() => {
+                                                router.delete(destroyCategory(p.id).url);
+                                            }}
                                             className="hover:bg-red-100 inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium cursor-pointer transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 disabled:cursor-not-allowed [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 hover:bg-accent hover:text-accent-foreground h-9 w-9"
                                         >
                                             <Trash2 className="text-red-500" />
