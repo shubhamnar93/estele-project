@@ -10,10 +10,10 @@ export default function SignUp() {
                     <h2 className="font-semibold tracking-tight font-serif text-2xl">SignUp</h2>
                     <p className="text-[#796360] text-sm">Sing up and explore our product</p>
                 </div>
-                <InputWithLabel value={""} placeholder="john doe" text={"Username"} />
-                <InputWithLabel value={""} placeholder="jane@gmail.com" text={"Email"} />
+                <InputWithLabel name="name" value={""} placeholder="john doe" text={"Username"} />
+                <InputWithLabel name="email" value={""} placeholder="jane@gmail.com" text={"Email"} />
 
-                <InputWithLabel value={""} placeholder="password..." text={"Password"} />
+                <InputWithLabel name="password" value={""} placeholder="password..." text={"Password"} />
                 <Button className={"w-full bg-black text-white py-4"}>Sign Up</Button>
             </div>
         </div>

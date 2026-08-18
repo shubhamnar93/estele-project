@@ -5,11 +5,9 @@ import { RoseGoldCollection } from "@/components/RoseGoldCollection";
 import CategoryCarousel from "@/components/ShopBy"
 import BlingBanner from "@/components/BlingBanner";
 import Layout from "../Layout";
-
-
 import { dummyCategories } from "@/lib/data";
 
-export default function Index() {
+export default function Index({ featuredProducts, categories, collections, latestProducts }: any) {
     return (
         <Layout>
             <main className="">

@@ -1,9 +1,10 @@
 import { ChevronDown } from "lucide-react";
-export const Select = ({ defaultValue }: { defaultValue?: string }) => {
+export const Select = ({ defaultValue, name, options }: { defaultValue?: number, name: string, options: { value: number, text: string }[] }) => {
     return (
         <div className="relative w-full">
             <select
-                defaultValue={defaultValue ?? ""}
+                name={name}
+                defaultValue={defaultValue}
                 className="
                     flex h-9 w-full appearance-none
                     items-center justify-between
@@ -23,10 +24,9 @@ export const Select = ({ defaultValue }: { defaultValue?: string }) => {
                 <option value="" disabled>
                     Select
                 </option>
-
-                <option value="option1">Option 1</option>
-                <option value="option2">Option 2</option>
-                <option value="option3">Option 3</option>
+                {options.map((o) =>
+                    <option value={o.value}>{o.text}</option>
+                )}
             </select>
 
             <ChevronDown

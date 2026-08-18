@@ -1,11 +1,13 @@
+import { useState } from "react"
 
-export const InputWithLabel = ({ text, placeholder, value }: { text: string, placeholder: string, value?: string | number }) => {
+export const InputWithLabel = ({ text, placeholder, value, name }: { name: string, text: string, placeholder: string, value?: string | number }) => {
+    const [v, setV] = useState(value)
     return (
         <div className="space-y-2">
             <label className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
                 {text}
             </label>
-            <input value={value} className="flex h-9 w-full rounded-md border-1 border-neutral-300 bg-transparent px-3 py-1 text-base shadow-sm transition-colors" placeholder={placeholder} />
+            <input name={name} value={v} onChange={(e) => setV(e.target.value)} className="flex h-9 w-full rounded-md border-1 border-neutral-300 bg-transparent px-3 py-1 text-base shadow-sm transition-colors" placeholder={placeholder} />
         </div>
     )
 }
