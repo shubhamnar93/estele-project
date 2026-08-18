@@ -1,14 +1,6 @@
+import { Product } from "@/lib/data";
 import { Heart } from "lucide-react";
 
-type Product = {
-    id: number;
-    title: string;
-    image: string;
-    hoverImage: string;
-    href: string;
-    originalPrice: number;
-    price: number;
-};
 
 export default function ProductCard({ product }: { product: Product }) {
     return (
@@ -16,13 +8,13 @@ export default function ProductCard({ product }: { product: Product }) {
             <div className="relative overflow-hidden">
                 <a href={product.href}>
                     <img
-                        src={product.image}
+                        src={product.imageUrls[0]}
                         alt={product.title}
                         className="aspect-square w-full object-cover transition-opacity duration-300 group-hover:opacity-0"
                     />
 
                     <img
-                        src={product.hoverImage}
+                        src={product.imageUrls[1]}
                         alt=""
                         className="absolute inset-0 aspect-square w-full object-cover opacity-0 transition-opacity duration-300 group-hover:opacity-100"
                     />
@@ -51,10 +43,6 @@ export default function ProductCard({ product }: { product: Product }) {
                 </h3>
 
                 <div className="mt-1 flex items-center gap-2">
-                    <del className="text-sm text-gray-400">
-                        ₹{product.originalPrice.toLocaleString("en-IN")}
-                    </del>
-
                     <span className="text-sm font-medium">
                         ₹{product.price.toLocaleString("en-IN")}
                     </span>

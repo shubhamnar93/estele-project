@@ -5,17 +5,19 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Layers, Package, Pencil, Plus, SquareArrowRightExit, Tag, Trash2, X } from "lucide-react";
 import { ReactNode, useState } from "react";
-type product = { name: string, price: number, stock: number, category: string, collection: string, imgUrls: string[], description: string }
-type category = { name: string, slug: string, imgUrl: string, description: string }
-type collection = { name: string, slug: string, imgUrl: string, description: string }
+import { Product, Category, Collection, dummyCategories, dummyCollections, dummyProducts } from "@/lib/data";
+
+type product = Product;
+type category = Category;
+type collection = Collection;
 
 export default function Admin() {
     const [isOpen, setIsOpen] = useState(false)
     const [title, setTitle] = useState("")
     const [whatTo, setWhatTo] = useState<"products" | "collections" | "categories">("products")
-    const [product, setProduct] = useState<product>({ name: "", price: 0, stock: 0, category: "", collection: "", imgUrls: [""], description: "" })
-    const [collection, setCollection] = useState({ name: "", slug: "", imgUrl: "", description: "" })
-    const [category, setCategory] = useState({ name: "", slug: "", imgUrl: "", description: "" })
+    const [product, setProduct] = useState<product>({ id: "", name: "", price: 0, stock: 0, categoryId: "", collectionId: "", imageUrls: [""], description: "" })
+    const [collection, setCollection] = useState<category>({ id: "", name: "", slug: "", imgUrl: "", description: "" })
+    const [category, setCategory] = useState<category>({ id: "", name: "", slug: "", imgUrl: "", description: "" })
 
     const handleOnClick = ({ title, product, category, collection }: { title: string, product?: product, category?: category, collection?: collection }) => {
         if (whatTo == "products" && product) setProduct(product)
@@ -44,7 +46,7 @@ export default function Admin() {
                     <DataCard title="collections" icon={<Layers />} total={3} />
                     <DataCard title="categories" icon={<Tag />} total={3} />
                 </section>
-                <Tabs defaultValue="account" className="">
+                <Tabs defaultValue="products" className="">
                     <div className="w-full">
                         <TabsList className={"h-9 p-1 bg-[#f8eeea]"}>
                             <TabsTrigger onClick={() => { setWhatTo("products") }} value="products" className={""}>Products</TabsTrigger>
@@ -55,7 +57,7 @@ export default function Admin() {
                             <TabsContent value="products">
                                 <div className="flex w-full  items-center justify-between gap-3">
                                     <input placeholder="Search by name" className="flex max-w-xs h-9 w-full border-1 border-gray-200 rounded-md bg-transparent px-3 py-1 text-base shadow-sm transition-colors" />
-                                    <Button onClick={() => handleOnClick({ title: "Add Product", product: { name: "", price: 0, stock: 0, category: "", collection: "", imgUrls: [""], description: "" } })} text="Add Products" />
+                                    <Button onClick={() => handleOnClick({ title: "Add Product", product: { id: "", name: "", price: 0, stock: 0, categoryId: "", collectionId: "", imageUrls: [""], description: "" } })} text="Add Products" />
                                 </div>
                                 <div className="  [&_*]:border-neutral-300 mt-8">
                                     <TableCard handleOnClick={({ title, product }: { title: string, product: product }) => handleOnClick({ title, product })} />
@@ -64,7 +66,7 @@ export default function Admin() {
                             <TabsContent value="collections">
 
                                 <div className="flex w-full  items-center justify-end gap-3 mb-8">
-                                    <Button onClick={() => handleOnClick({ title: "Add Collection", product: { name: "", price: 0, stock: 0, category: "", collection: "", imgUrls: [""], description: "" } })} text="Add Products" />
+                                    <Button onClick={() => handleOnClick({ title: "Add Collection", product: { id: "", name: "", price: 0, stock: 0, categoryId: "", collectionId: "", imageUrls: [""], description: "" } })} text="Add Products" />
                                 </div>
 
                                 <TableCard handleOnClick={handleOnClick} />
@@ -72,7 +74,7 @@ export default function Admin() {
                             <TabsContent value="categories">
 
                                 <div className="flex w-full  items-center justify-end gap-3 mb-8">
-                                    <Button onClick={() => handleOnClick({ title: "Add Category", product: { name: "", price: 0, stock: 0, category: "", collection: "", imgUrls: [""], description: "" } })} text="Add Products" />
+                                    <Button onClick={() => handleOnClick({ title: "Add Category", product: { id: "", name: "", price: 0, stock: 0, categoryId: "", collectionId: "", imageUrls: [""], description: "" } })} text="Add Products" />
                                 </div>
                                 <TableCard handleOnClick={handleOnClick} />
                             </TabsContent>
@@ -87,13 +89,13 @@ export default function Admin() {
                     <div className="grid gap-4 sm:grid-cols-2 ">
                         <InputWithLabel text="Price" placeholder="999..." value={product.price} />
                         <InputWithLabel text="Stock" placeholder="999..." value={product.stock} />
-                        <SelectWithLabel text="Category" value={product.category} />
-                        <SelectWithLabel text="Collection" value={product.collection} />
+                        <SelectWithLabel text="Category" value={product.categoryId} />
+                        <SelectWithLabel text="Collection" value={product.collectionId} />
                     </div>
-                    
+
                     <div className="space-y-2">
                         <label className="text-sm font-medium leading-none">Image Urls</label>
-                        {product.imgUrls.map((url, idx) => (
+                        {product.imageUrls.map((url, idx) => (
                             <div key={idx} className="flex gap-2">
                                 <input
                                     type="text"
@@ -101,15 +103,15 @@ export default function Admin() {
                                     value={url}
                                     placeholder="https://..."
                                     onChange={(e) => {
-                                        const newUrls = [...product.imgUrls];
+                                        const newUrls = [...product.imageUrls];
                                         newUrls[idx] = e.target.value;
-                                        setProduct({ ...product, imgUrls: newUrls });
+                                        setProduct({ ...product, imageUrls: newUrls });
                                     }}
                                 />
-                                {product.imgUrls.length > 1 && (
+                                {product.imageUrls.length > 1 && (
                                     <button type="button" onClick={() => {
-                                        const newUrls = product.imgUrls.filter((_, i) => i !== idx);
-                                        setProduct({ ...product, imgUrls: newUrls });
+                                        const newUrls = product.imageUrls.filter((_, i) => i !== idx);
+                                        setProduct({ ...product, imageUrls: newUrls });
                                     }} className="flex h-9 w-9 items-center justify-center rounded-md border border-red-200 bg-red-50 text-red-500 hover:bg-red-100">
                                         <Trash2 size={16} />
                                     </button>
@@ -117,7 +119,7 @@ export default function Admin() {
                             </div>
                         ))}
                         <button type="button" onClick={() => {
-                            setProduct({ ...product, imgUrls: [...product.imgUrls, ""] });
+                            setProduct({ ...product, imageUrls: [...product.imageUrls, ""] });
                         }} className="text-sm font-medium text-[#9c3348] hover:underline">
                             + Add Image
                         </button>
@@ -162,49 +164,9 @@ export const TableCard = ({ handleOnClick }: { handleOnClick: ({ title, product 
     const nameOf = (list: { id: string; name: string }[], id: string) =>
         list.find((entry) => entry.id === id)?.name ?? "—";
     const seed = {
-        categories: [
-            { id: "cat-lips", name: "Lips", slug: "lips", description: "Lipsticks, liners and glosses." },
-            { id: "cat-eyes", name: "Eyes", slug: "eyes", description: "Kajal, mascara and liners." },
-            { id: "cat-face", name: "Face", slug: "face", description: "Foundation, blush and highlighter." },
-            { id: "cat-nails", name: "Nails", slug: "nails", description: "Nail lacquers and care." },
-        ],
-        collections: [
-            { id: "col-bestsellers", name: "Bestsellers", slug: "bestsellers", description: "Most-loved everyday essentials.", featured: true },
-            { id: "col-newin", name: "New In", slug: "new-in", description: "Fresh drops of the season.", featured: true },
-            { id: "col-matte", name: "Matte Story", slug: "matte-story", description: "Long-wear matte finishes.", featured: false },
-        ],
-        products: [
-            {
-                id: "prd-1",
-                name: "Velvet Matte Lipstick — Rosewood",
-                price: 599,
-                stock: 128,
-                categoryId: "cat-lips",
-                collectionId: "col-bestsellers",
-                imageUrls: [""],
-                description: "Weightless matte colour with 10-hour wear.",
-            },
-            {
-                id: "prd-2",
-                name: "Intense Kajal — Jet Black",
-                price: 299,
-                stock: 340,
-                categoryId: "cat-eyes",
-                collectionId: "col-bestsellers",
-                imageUrls: [""],
-                description: "Smudge-proof, waterproof definition.",
-            },
-            {
-                id: "prd-3",
-                name: "Glow Serum Foundation — Beige",
-                price: 899,
-                stock: 42,
-                categoryId: "cat-face",
-                collectionId: "col-newin",
-                imageUrls: [""],
-                description: "Skin-loving hydration with medium coverage.",
-            },
-        ],
+        categories: dummyCategories,
+        collections: dummyCollections,
+        products: dummyProducts,
     };
 
     const filteredProducts = seed.products
@@ -237,10 +199,11 @@ export const TableCard = ({ handleOnClick }: { handleOnClick: ({ title, product 
                                         <button
                                             onClick={() => handleOnClick({
                                                 title: "Edit", product: {
-                                                    category: nameOf(seed.categories, p.categoryId) ?? "",
-                                                    collection: nameOf(seed.categories, p.categoryId) ?? "",
+                                                    id: p.id,
+                                                    categoryId: p.categoryId,
+                                                    collectionId: p.collectionId,
                                                     description: p.description,
-                                                    imgUrls: p.imageUrls,
+                                                    imageUrls: p.imageUrls,
                                                     name: p.name,
                                                     price: p.price,
                                                     stock: p.stock,

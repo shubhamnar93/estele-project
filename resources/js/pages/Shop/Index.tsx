@@ -1,6 +1,5 @@
 import CollectionHeader from "@/components/FilterSection"
 import Layout from "../Layout"
-import FilterSidebar from "@/components/FilterSidebar"
 import CollectionGrid from "@/components/CollectionGrid"
 
 export default function Shop() {

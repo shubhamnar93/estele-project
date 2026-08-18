@@ -1,29 +1,4 @@
-const collections = [
-    {
-        title: "₹999",
-        href: "/collections/under-999",
-        image:
-            "https://estele.co/cdn/shop/files/Path_84397_2x_c51eb4f5-4c4f-4ee3-a489-d5daec626af9.png?v=1747328297",
-    },
-    {
-        title: "₹1,499",
-        href: "/collections/under-1999",
-        image:
-            "https://estele.co/cdn/shop/files/Path_84397_2x_c51eb4f5-4c4f-4ee3-a489-d5daec626af9.png?v=1747328297",
-    },
-    {
-        title: "₹2,999",
-        href: "/collections/under-2999",
-        image:
-            "https://estele.co/cdn/shop/files/Path_84397_2x_c51eb4f5-4c4f-4ee3-a489-d5daec626af9.png?v=1747328297",
-    },
-    {
-        title: "Pearls",
-        href: "/collections/pearl-collection",
-        image:
-            "https://estele.co/cdn/shop/files/Mask_Group_406_2x_02f982e3-943b-4bbb-ba34-450e126d2bc5.png?v=1747328554",
-    },
-];
+import { dummyBudgetCollections as collections } from "@/lib/data";
 
 function CollectionCard({
     title,

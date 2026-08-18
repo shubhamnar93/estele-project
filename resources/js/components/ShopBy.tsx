@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-
+import { Category } from "@/lib/data";
 
 function usePerView() {
     // 8 on desktop, 3 on tablet, 2 on mobile — matches the source
@@ -17,7 +17,7 @@ function usePerView() {
     return perView;
 }
 
-export default function CategoryCarousel({ heading, categories }: { heading: string, categories: { image: string, title: string, link: string }[] }) {
+export default function CategoryCarousel({ heading, categories }: { heading: string, categories: Category[] }) {
     const perView = usePerView();
     const trackRef = useRef(null);
     const [page, setPage] = useState(0);
@@ -28,8 +28,6 @@ export default function CategoryCarousel({ heading, categories }: { heading: str
     useEffect(() => {
         if (page >= pageCount) setPage(0);
     }, [pageCount, page]);
-
-
 
     return (
 
@@ -59,8 +57,8 @@ export default function CategoryCarousel({ heading, categories }: { heading: str
                     >
                         {categories.map((c) => (
                             <a
-                                key={c.link}
-                                href={c.link}
+                                key={c.id}
+                                href={`/collections/${c.slug}`}
                                 className="group block shrink-0 min-w-0 text-center"
                             >
                                 {/* image — 2:3 portrait, rounded 8% like source */}
@@ -69,8 +67,8 @@ export default function CategoryCarousel({ heading, categories }: { heading: str
                                     style={{ aspectRatio: "2 / 3", borderRadius: "8%" }}
                                 >
                                     <img
-                                        src={c.image}
-                                        alt={c.title}
+                                        src={c.imgUrl}
+                                        alt={c.name}
                                         loading="lazy"
                                         className="w-[115px] h-full object-cover transition-transform duration-500 group-hover:scale-105"
                                     />
