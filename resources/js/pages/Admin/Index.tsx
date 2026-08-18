@@ -1,3 +1,4 @@
+import { InputWithLabel } from "@/components/InputWithLabel";
 import { Select } from "@/components/Select";
 import { Card, CardContent } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
@@ -5,14 +6,21 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Layers, Package, Pencil, Plus, SquareArrowRightExit, Tag, Trash2, X } from "lucide-react";
 import { ReactNode, useState } from "react";
 type product = { name: string, price: number, stock: number, category: string, collection: string, imgUrl: string, description: string }
+type category = { name: string, slug: string, imgUrl: string, description: string }
+type collection = { name: string, slug: string, imgUrl: string, description: string }
 
 export default function Admin() {
     const [isOpen, setIsOpen] = useState(false)
     const [title, setTitle] = useState("")
     const [whatTo, setWhatTo] = useState<"products" | "collections" | "categories">("products")
     const [product, setProduct] = useState({ name: "", price: 0, stock: 0, category: "", collection: "", imgUrl: "", description: "" })
-    const handleOnClick = ({ title, product }: { title: string, product?: product }) => {
+    const [collection, setCollection] = useState({ name: "", slug: "", imgUrl: "", description: "" })
+    const [category, setCategory] = useState({ name: "", slug: "", imgUrl: "", description: "" })
+
+    const handleOnClick = ({ title, product, category, collection }: { title: string, product?: product, category?: category, collection?: collection }) => {
         if (whatTo == "products" && product) setProduct(product)
+        if (whatTo == "categories" && category) setCategory(category)
+        if (whatTo == "collections" && collection) setCollection(collection)
         setIsOpen((o) => !o)
         setTitle(title)
     }
@@ -39,9 +47,9 @@ export default function Admin() {
                 <Tabs defaultValue="account" className="">
                     <div className="w-full">
                         <TabsList className={"h-9 p-1 bg-[#f8eeea]"}>
-                            <TabsTrigger value="products" className={""}>Products</TabsTrigger>
-                            <TabsTrigger value="collections">Collections</TabsTrigger>
-                            <TabsTrigger value="categories">Categories</TabsTrigger>
+                            <TabsTrigger onClick={() => { setWhatTo("products") }} value="products" className={""}>Products</TabsTrigger>
+                            <TabsTrigger onClick={() => { setWhatTo("collections") }} value="collections">Collections</TabsTrigger>
+                            <TabsTrigger onClick={() => { setWhatTo("categories") }} value="categories">Categories</TabsTrigger>
                         </TabsList>
                         <div className="mt-8 w-full">
                             <TabsContent value="products">
@@ -53,13 +61,26 @@ export default function Admin() {
                                     <TableCard handleOnClick={({ title, product }: { title: string, product: product }) => handleOnClick({ title, product })} />
                                 </div>
                             </TabsContent>
-                            <TabsContent value="collections"><TableCard handleOnClick={handleOnClick} /></TabsContent>
-                            <TabsContent value="categories"><TableCard handleOnClick={handleOnClick} /></TabsContent>
+                            <TabsContent value="collections">
+
+                                <div className="flex w-full  items-center justify-end gap-3 mb-8">
+                                    <Button onClick={() => handleOnClick({ title: "Add Collection", product: { name: "", price: 0, stock: 0, category: "", collection: "", imgUrl: "", description: "" } })} text="Add Products" />
+                                </div>
+
+                                <TableCard handleOnClick={handleOnClick} />
+                            </TabsContent>
+                            <TabsContent value="categories">
+
+                                <div className="flex w-full  items-center justify-end gap-3 mb-8">
+                                    <Button onClick={() => handleOnClick({ title: "Add Category", product: { name: "", price: 0, stock: 0, category: "", collection: "", imgUrl: "", description: "" } })} text="Add Products" />
+                                </div>
+                                <TableCard handleOnClick={handleOnClick} />
+                            </TabsContent>
                         </div>
                     </div>
                 </Tabs>
             </main>
-            {isOpen && <Form title={title} onClose={() => handleOnClick({ title: "" })} >
+            {isOpen && whatTo === "products" && <Form title={title} onClose={() => handleOnClick({ title: "" })} >
 
                 <form className="space-y-4">
                     <InputWithLabel text="Name" placeholder="name..." value={product.name} />
@@ -72,46 +93,26 @@ export default function Admin() {
                     <InputWithLabel text="Image Url" placeholder="https://..." value={product.imgUrl} />
                     <InputWithLabel text="Description" placeholder="description..." value={product.description} />
 
-                    <FormButton onClose={() => handleOnClick({ title: "" })} />
+                </form>
+            </Form>}
+            {isOpen && whatTo === "collections" && <Form title={title} onClose={() => handleOnClick({ title: "" })} >
+                <form className="space-y-4">
+                    <InputWithLabel text="Name" placeholder="name..." value={collection.name} />
+                    <InputWithLabel text="slug" placeholder="slug..." value={collection.slug} />
+                    <InputWithLabel text="Image Url" placeholder="https://..." value={collection.imgUrl} />
+                    <InputWithLabel text="Description" placeholder="description..." value={collection.description} />
+                </form>
+            </Form>}
+            {isOpen && whatTo === "categories" && <Form title={title} onClose={() => handleOnClick({ title: "" })} >
+                <form className="space-y-4">
+                    <InputWithLabel text="Name" placeholder="name..." value={category.name} />
+                    <InputWithLabel text="slug" placeholder="slug..." value={category.slug} />
+                    <InputWithLabel text="Image Url" placeholder="https://..." value={category.imgUrl} />
+                    <InputWithLabel text="Description" placeholder="description..." value={category.description} />
                 </form>
             </Form>}
         </div>
 
-    )
-}
-export const Form = ({ onClose, title, children }: { onClose: () => void, title: string, children?: ReactNode }) => {
-    return (
-        <div className="fixed inset-0 z-50 bg-black/80">
-            <div className="fixed overflow-y-auto sm:max-w-lg sm:rounded-lg max-h-[90vh] bg-[#fef8fa] border-[#e7dbd8] left-[50%] top-[50%] z-50 grid w-full max-w-lg translate-x-[-50%] translate-y-[-50%] gap-4 p-6 shadow-lg duration-200">
-                <div className="flex flex-col space-y-1.5 text-center sm:text-left">
-                    <h2 className="font-semibold tracking-tight font-serif text-2xl">{title}</h2>
-                    <p className="text-[#796360] text-sm">Product details shown on the storefront.</p>
-                </div>
-                <button onClick={onClose} className="cursor-pointer absolute right-4 top-4 rounded-sm opacity-70 ">
-                    <X />
-                </button>
-                {children}
-
-            </div>
-        </div>
-    )
-}
-export const FormButton = ({ onClose }: { onClose: () => void }) => {
-    return (
-        <div className="flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-2 pt-2">
-            <button onClick={onClose} className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium cursor-pointer transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 disabled:cursor-not-allowed [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0  shadow-sm h-9 px-4 py-2 border-neutral-300 border-1 bg-transparent"> Cancel</button>
-            <button className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm text-white font-medium cursor-pointer transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 disabled:cursor-not-allowed [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0  shadow-sm h-9 px-4 py-2 border-neutral-300 border-1 bg-[#9c3348]"> Add</button>
-        </div>
-    )
-}
-export const InputWithLabel = ({ text, placeholder, value }: { text: string, placeholder: string, value?: string | number }) => {
-    return (
-        <div className="space-y-2">
-            <label className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
-                {text}
-            </label>
-            <input value={value} className="flex h-9 w-full rounded-md border-1 border-neutral-300 bg-transparent px-3 py-1 text-base shadow-sm transition-colors" placeholder={placeholder} />
-        </div>
     )
 }
 export const SelectWithLabel = ({ text, value }: { text: string, value: string }) => {
@@ -259,6 +260,7 @@ export const DataCard = ({ title, icon, total }: { title: string, icon: ReactNod
         </div>
     )
 }
+
 export const Button = ({ text, onClick }: { text: string, onClick: () => void }) => {
     return (
         <button onClick={onClick} className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium cursor-pointer transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 disabled:cursor-not-allowed [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 h-9 px-4 py-2 shandow-md bg-[#9c3348] text-white hover:bg-[#9c3348e6]">
@@ -267,4 +269,34 @@ export const Button = ({ text, onClick }: { text: string, onClick: () => void })
         </button>
     )
 
+}
+
+export const FormButton = ({ onClose, title }: { onClose: () => void, title: string }) => {
+    return (
+        <div className="flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-2 pt-2">
+            <button onClick={onClose} className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium cursor-pointer transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 disabled:cursor-not-allowed [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0  shadow-sm h-9 px-4 py-2 border-neutral-300 border-1 bg-transparent"> Cancel</button>
+            <button className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm text-white font-medium cursor-pointer transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 disabled:cursor-not-allowed [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0  shadow-sm h-9 px-4 py-2 border-neutral-300 border-1 bg-[#9c3348]">
+                {title}
+            </button>
+        </div>
+    )
+}
+
+export const Form = ({ onClose, title, children }: { onClose: () => void, title: string, children?: ReactNode }) => {
+    return (
+        <div className="fixed inset-0 z-50 bg-black/80">
+            <div className="fixed overflow-y-auto sm:max-w-lg sm:rounded-lg max-h-[90vh] bg-[#fef8fa] border-[#e7dbd8] left-[50%] top-[50%] z-50 grid w-full max-w-lg translate-x-[-50%] translate-y-[-50%] gap-4 p-6 shadow-lg duration-200">
+                <div className="flex flex-col space-y-1.5 text-center sm:text-left">
+                    <h2 className="font-semibold tracking-tight font-serif text-2xl">{title}</h2>
+                    <p className="text-[#796360] text-sm">Product details shown on the storefront.</p>
+                </div>
+                <button onClick={onClose} className="cursor-pointer absolute right-4 top-4 rounded-sm opacity-70 ">
+                    <X />
+                </button>
+                {children}
+
+                <FormButton title={title} onClose={onClose} />
+            </div>
+        </div>
+    )
 }
