@@ -15,13 +15,6 @@ const sortOptions = [
     { label: "Date, new to old", value: "created-descending" },
 ];
 
-const items = [
-    { label: "Necklace Set", value: "Necklace Set", count: 117 },
-    { label: "Bracelets", value: "Bracelets", count: 62 },
-    { label: "Bangles", value: "Bangles", count: 3 },
-    { label: "Rings", value: "Rings", count: 6 },
-];
-
 export default function CollectionHeader() {
     const [sortOpen, setSortOpen] = useState(false);
     const [selectedSort, setSelectedSort] = useState("manual");

@@ -1,3 +1,4 @@
+import { Category, dummyCategories } from "@/lib/data";
 import React, { useState, useRef, useCallback, useEffect, ReactNode } from "react";
 
 /**
@@ -167,19 +168,10 @@ function FacetValue({ label, count, checked, onToggle }: { label: string, count:
  *   onApply     {fn}      (selectedCats, [low, high]) => void
  */
 export default function FilterSidebar({
-    categories = [
-        { label: "Necklace Set", count: 117 },
-        { label: "Bracelets", count: 62 },
-        { label: "Bangles", count: 3 },
-        { label: "Rings", count: 6 },
-    ],
     priceMin = 0,
     priceMax = 299950,
     onApply,
 }: {
-    categories?: {
-        label: string, count: number,
-    }[],
     priceMin?: number,
     priceMax?: number,
     onApply?: (selected: any, price: number[]) => void
@@ -196,6 +188,7 @@ export default function FilterSidebar({
             return next;
         });
     };
+    const categories = dummyCategories
 
     return (
         <div
@@ -216,15 +209,19 @@ export default function FilterSidebar({
                         Category
                     </h5>
                     <ul className="t4s-filter__values is--style-checkbox flex flex-col gap-0.5">
-                        {categories.map((c) => (
-                            <FacetValue
-                                key={c.label}
-                                label={c.label}
-                                count={c.count}
-                                checked={selected.has(c.label)}
-                                onToggle={() => toggle(c.label)}
-                            />
-                        ))}
+                        {categories.map((c) => {
+
+                            console.log(c);
+                            return (
+                                < FacetValue key={c.id}
+                                    label={c.name}
+                                    count={c.count}
+                                    checked={selected.has(c.id)}
+                                    onToggle={() => toggle(c.id)}
+                                />
+                            )
+                        }
+                        )}
                     </ul>
                 </div>
 

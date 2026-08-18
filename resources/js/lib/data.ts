@@ -3,6 +3,7 @@ export type Category = {
     name: string;
     slug: string;
     description: string;
+    count: number;
     imgUrl?: string;
 };
 
@@ -31,6 +32,7 @@ export type Product = {
 export const dummyCategories: Category[] = [
     {
         id: "cat-necklace-sets",
+        count: 10,
         name: "Necklace Sets",
         slug: "necklace-sets",
         description: "Beautiful necklace sets.",
@@ -38,6 +40,7 @@ export const dummyCategories: Category[] = [
     },
     {
         id: "cat-pendant-sets",
+        count: 10,
         name: "Pendant Sets",
         slug: "pendant-sets",
         description: "Beautiful pendant sets.",
@@ -45,6 +48,7 @@ export const dummyCategories: Category[] = [
     },
     {
         id: "cat-earrings",
+        count: 10,
         name: "Earrings",
         slug: "earrings",
         description: "Elegant earrings.",
@@ -52,6 +56,7 @@ export const dummyCategories: Category[] = [
     },
     {
         id: "cat-rings",
+        count: 10,
         name: "Rings",
         slug: "rings",
         description: "Elegant rings.",
@@ -59,6 +64,7 @@ export const dummyCategories: Category[] = [
     },
     {
         id: "cat-bracelets",
+        count: 10,
         name: "Bracelets",
         slug: "bracelets",
         description: "Beautiful bracelets.",
@@ -66,6 +72,7 @@ export const dummyCategories: Category[] = [
     },
     {
         id: "cat-bangles",
+        count: 10,
         name: "Bangles",
         slug: "bangles",
         description: "Beautiful bangles.",
@@ -73,6 +80,7 @@ export const dummyCategories: Category[] = [
     },
     {
         id: "cat-brooch",
+        count: 10,
         name: "Brooch",
         slug: "brooch",
         description: "Beautiful brooches.",
@@ -80,6 +88,7 @@ export const dummyCategories: Category[] = [
     },
     {
         id: "cat-chokers",
+        count: 10,
         name: "Chokers",
         slug: "chokers",
         description: "Beautiful chokers.",
@@ -87,6 +96,7 @@ export const dummyCategories: Category[] = [
     },
     {
         id: "cat-maang-tikka",
+        count: 10,
         name: "Maang Tikka",
         slug: "maang-tikka",
         description: "Beautiful maang tikka.",

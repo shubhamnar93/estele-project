@@ -1,33 +1,12 @@
+import { Category, dummyCategories } from "@/lib/data";
 import { X } from "lucide-react";
 import { useState } from "react";
 
-type category = { name: string, href: string, count: number }
 
-const categories: category[] = [
-    {
-        name: "Necklace Set",
-        count: 117,
-        href: "/collections/crystal-blooms?filter.p.product_type=Bracelets&filter.p.product_type=Necklace+Set",
-    },
-    {
-        name: "Bracelets",
-        count: 62,
-        href: "/collections/crystal-blooms",
-    },
-    {
-        name: "Bangles",
-        count: 3,
-        href: "/collections/crystal-blooms?filter.p.product_type=Bracelets&filter.p.product_type=Bangles",
-    },
-    {
-        name: "Rings",
-        count: 6,
-        href: "/collections/crystal-blooms?filter.p.product_type=Bracelets&filter.p.product_type=Rings",
-    },
-];
+const categories: Category[] = dummyCategories;
 
 export default function ProductTypeFilter() {
-    const [selected, setSelected] = useState<null | category>(null)
+    const [selected, setSelected] = useState<null | Category>(null)
     return (
         <>
             <div className="mt-4">
