@@ -1,6 +1,7 @@
 
 import { InputWithLabel } from "@/components/InputWithLabel";
 import { Button } from "@/components/ui/button";
+import { Link } from "@inertiajs/react";
 
 export default function Login() {
     return (
@@ -10,9 +11,11 @@ export default function Login() {
                     <h2 className="font-semibold tracking-tight font-serif text-2xl">Login</h2>
                     <p className="text-[#796360] text-sm">Login to your existing account</p>
                 </div>
-                <InputWithLabel value={""} placeholder="john doe" text={"Username"} />
-                <InputWithLabel value={""} placeholder="password..." text={"Password"} />
+                <InputWithLabel name="name" value={""} placeholder="john doe" text={"Username"} />
+                <InputWithLabel name="password" value={""} placeholder="password..." text={"Password"} />
                 <Button className={"w-full bg-black text-white py-4"}>Login</Button>
+
+                <span className="w-full flex justify-center"> don't have account?{' '}<Link href={"/signup"}>Sign up</Link></span>
             </div>
         </div>
     )

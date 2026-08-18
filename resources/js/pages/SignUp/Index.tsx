@@ -1,5 +1,5 @@
 import { InputWithLabel } from "@/components/InputWithLabel";
-import { Button } from "@/components/ui/button";
+import { Form, Link } from "@inertiajs/react";
 
 export default function SignUp() {
     return (
@@ -10,12 +10,16 @@ export default function SignUp() {
                     <h2 className="font-semibold tracking-tight font-serif text-2xl">SignUp</h2>
                     <p className="text-[#796360] text-sm">Sing up and explore our product</p>
                 </div>
-                <InputWithLabel name="name" value={""} placeholder="john doe" text={"Username"} />
-                <InputWithLabel name="email" value={""} placeholder="jane@gmail.com" text={"Email"} />
+                <Form action={"/register"} method={"POST"} className="gap-4 space-y-4">
+                    <InputWithLabel name="name" value={""} placeholder="john doe" text={"Username"} />
+                    <InputWithLabel name="email" value={""} placeholder="jane@gmail.com" text={"Email"} />
 
-                <InputWithLabel name="password" value={""} placeholder="password..." text={"Password"} />
-                <Button className={"w-full bg-black text-white py-4"}>Sign Up</Button>
+                    <InputWithLabel name="password" value={""} placeholder="password..." text={"Password"} />
+                    <button type="submit" className={"w-full bg-black text-white py-2 rounded-sm"}>Sign Up</button>
+                    <span className="w-full flex justify-center"> Already have account?{' '}<Link href={"/login"}>Login</Link></span>
+                </Form>
             </div>
+
         </div>
     )
 }

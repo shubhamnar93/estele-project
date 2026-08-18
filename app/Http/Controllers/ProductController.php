@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Product;
 use Illuminate\Http\RedirectResponse;
+use App\Models\Product;
 use App\Models\Collection;
 use App\Models\Category;
 

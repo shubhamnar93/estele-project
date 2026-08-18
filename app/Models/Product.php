@@ -23,5 +23,12 @@ class Product extends Model
     public function collection()
     {
         return $this->belongsTo(Collection::class);
-}
+    }
+    protected function casts(): array
+    {
+        return [
+            'images' => 'array',
+            'price' => 'decimal:2',
+        ];
+    }
 }
