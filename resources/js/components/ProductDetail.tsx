@@ -1,3 +1,5 @@
+import { product } from "@/routes";
+import { Product } from "@/types/product";
 import { ArrowLeftIcon, ArrowRightIcon } from "lucide-react";
 import { useState, useMemo } from "react";
 
@@ -5,10 +7,6 @@ import { useState, useMemo } from "react";
 /*  Types                                                              */
 /* ------------------------------------------------------------------ */
 
-interface ProductImage {
-    src: string;
-    alt: string;
-}
 
 interface Variant {
     id: string;
@@ -30,34 +28,6 @@ interface UspItem {
 /*  Static product data (lifted from the source HTML)                  */
 /* ------------------------------------------------------------------ */
 
-const PRODUCT = {
-    title: "Dazzle Petal Bangles Size-2.6",
-    collection: "Sitara Crystal Bloom Collection",
-    price: 2650,
-    compareAt: 5299,
-    discountPct: 50,
-    rating: 4.8,
-    reviewCount: 124,
-};
-
-const IMAGES: ProductImage[] = [
-    {
-        src: "https://estele.co/cdn/shop/files/11_42cff08f-5a1f-48f6-96ea-8ff3787710b6.jpg?v=1781761433&width=1000",
-        alt: "Dazzle Petal Bangles – front view",
-    },
-    {
-        src: "https://estele.co/cdn/shop/files/12_d0d97806-7a7b-4d8c-9fde-80c7b3635bb3.jpg?v=1781761433&width=1000",
-        alt: "Dazzle Petal Bangles – side view",
-    },
-    {
-        src: "https://estele.co/cdn/shop/files/13_f1279071-e5d4-429d-bc81-1a25332143af.jpg?v=1781761433&width=1000",
-        alt: "Dazzle Petal Bangles – detail",
-    },
-    {
-        src: "https://estele.co/cdn/shop/files/14_1ed845ab-b4d0-4ffd-8f3d-842161ac5088.jpg?v=1781761433&width=1000",
-        alt: "Dazzle Petal Bangles – worn",
-    },
-];
 
 const VARIANTS: Variant[] = [
     { id: "51941846974781", size: "2.6", inventory: 6 },
@@ -76,7 +46,6 @@ const TRUST_BADGES = [
 ];
 
 const USP_ITEMS: UspItem[] = [
-    { label: "24k Gold Plated", icon: <DiamondIcon /> },
     { label: "35+ Years Legacy", icon: <LegacyIcon /> },
     { label: "Handcrafted & Skin Friendly", icon: <HandIcon /> },
     { label: "1 Year Warranty", icon: <ShieldIcon /> },
@@ -411,7 +380,7 @@ function Accordion({ items }: { items: TabItem[] }) {
 
 function UspBar() {
     return (
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 bg-[#FFF7F9] rounded-2xl px-5 py-6 mt-8">
+        <div className="grid grid-cols-3 sm:grid-cols-3 gap-4 bg-[#FFF7F9] rounded-2xl px-5 py-6 mt-8">
             {USP_ITEMS.map((u) => (
                 <div key={u.label} className="flex flex-col items-center text-center gap-2">
                     {u.icon}
@@ -428,7 +397,7 @@ function UspBar() {
 /*  Gallery                                                            */
 /* ------------------------------------------------------------------ */
 
-function Gallery({ images }: { images: ProductImage[] }) {
+function Gallery({ images }: { images: string[] }) {
     const [active, setActive] = useState(0);
 
     return (
@@ -446,8 +415,8 @@ function Gallery({ images }: { images: ProductImage[] }) {
                             }`}
                     >
                         <img
-                            src={img.src}
-                            alt={img.alt}
+                            src={img}
+                            alt={"product"}
                             className="w-full h-full object-cover"
                         />
                     </button>
@@ -458,13 +427,13 @@ function Gallery({ images }: { images: ProductImage[] }) {
             <div className="flex-1 relative">
                 <div className="aspect-square rounded-2xl overflow-hidden bg-neutral-50">
                     <img
-                        src={images[active].src}
-                        alt={images[active].alt}
+                        src={images[active]}
+                        alt={"product"}
                         className="w-full h-full object-cover"
                     />
                 </div>
                 <span className="absolute top-3 left-3 bg-[#d46d8c] text-white text-xs font-semibold px-3 py-1.5 rounded-full">
-                    SAVE {PRODUCT.discountPct}%
+                    SAVE 50%
                 </span>
                 {/* Prev / Next */}
                 {images.length > 1 && (
@@ -498,7 +467,7 @@ function Gallery({ images }: { images: ProductImage[] }) {
 /*  Main component                                                     */
 /* ------------------------------------------------------------------ */
 
-export default function ProductPage() {
+export default function ProductPage({ product }: { product: Product }) {
     const [selectedSize, setSelectedSize] = useState(VARIANTS[0].size);
     const [qty, setQty] = useState(1);
     const [added, setAdded] = useState(false);
@@ -519,26 +488,7 @@ export default function ProductPage() {
             content: (
                 <div className="space-y-4">
                     <p>
-                        Designed with sparkling CZ stones and a captivating triple leaf
-                        motif, these Dazzle Petal Bangles add brilliance to occasion wear.
-                        Their rose gold finish enhances the elegant circular pattern while
-                        offering a luxurious look. This {PRODUCT.collection} piece is
-                        perfect for celebrations, weddings, and festive gatherings.
-                    </p>
-                    <dl className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-1.5">
-                        {DESCRIPTION_SPECS.map((s) => (
-                            <div key={s.label} className="flex gap-1">
-                                <dt className="font-semibold whitespace-nowrap">{s.label}:</dt>
-                                <dd className="text-neutral-600">{s.value}</dd>
-                            </div>
-                        ))}
-                    </dl>
-                    <p>
-                        <span className="font-semibold">Care instructions: </span>
-                        Avoid contact with direct heat, water & organic chemicals i.e.
-                        perfumes, deodorants, sprays & other strong chemicals as they
-                        may react with the metal / plating. When not in use store jewelry
-                        in air-tight boxes / a cloth pouch to retain its shine.
+                        {product.description}
                     </p>
                 </div>
             ),
@@ -589,9 +539,9 @@ export default function ProductPage() {
                 <nav className="flex items-center gap-1.5">
                     <a href="#" className="hover:text-[#d46d8c]">Home</a>
                     <span>/</span>
-                    <a href="#" className="hover:text-[#d46d8c]">Bangles</a>
+                    <a href="#" className="hover:text-[#d46d8c]">{product.collection_id}</a>
                     <span>/</span>
-                    <span className="text-neutral-800 truncate">{PRODUCT.title}</span>
+                    <span className="text-neutral-800 truncate">{product.name}</span>
                 </nav>
             </div>
 
@@ -599,58 +549,31 @@ export default function ProductPage() {
             <div className="mx-auto max-w-7xl px-4 pb-12">
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
                     {/* ---- Left: Gallery ---- */}
-                    <div className="lg:sticky lg:top-6 lg:self-start">
-                        <Gallery images={IMAGES} />
-                    </div>
+                    {product.images &&
+                        <div className="lg:sticky lg:top-6 lg:self-start">
+                            <Gallery images={product.images} />
+                        </div>
+                    }
 
                     {/* ---- Right: Product info ---- */}
                     <div className="space-y-1">
                         {/* Title + wishlist / share */}
                         <div className="flex items-start justify-between gap-3">
                             <h1 className="text-lg font-semibold leading-snug text-neutral-900">
-                                {PRODUCT.title}
+                                {product.name}
                             </h1>
-                            <div className="flex items-center gap-2 shrink-0">
-                                <button
-                                    type="button"
-                                    className="w-9 h-9 rounded-full border border-neutral-200 flex items-center justify-center hover:border-[#d46d8c] transition-colors"
-                                    aria-label="Add to wishlist"
-                                >
-                                    <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="#3e3e3e" strokeWidth="1.6">
-                                        <path d="M12 21s-7-4.5-9.5-9C1 9 3 5.5 6.5 5.5c2 0 3.5 1.5 5.5 4 2-2.5 3.5-4 5.5-4C21 5.5 23 9 21.5 12c-2.5 4.5-9.5 9-9.5 9z" strokeLinejoin="round" />
-                                    </svg>
-                                </button>
-                                <button
-                                    type="button"
-                                    className="w-9 h-9 rounded-full border border-neutral-200 flex items-center justify-center hover:border-[#d46d8c] transition-colors"
-                                    aria-label="Share"
-                                >
-                                    <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="#3e3e3e" strokeWidth="1.6">
-                                        <circle cx="6" cy="12" r="2.5" />
-                                        <circle cx="18" cy="6" r="2.5" />
-                                        <circle cx="18" cy="18" r="2.5" />
-                                        <path d="M8 11l8-4M8 13l8 4" />
-                                    </svg>
-                                </button>
-                            </div>
                         </div>
 
                         {/* Price + review */}
                         <div className="flex flex-wrap items-center gap-3 pt-2">
                             <div className="flex items-center gap-2">
                                 <span className="text-2xl font-bold text-neutral-900">
-                                    {formatINR(PRODUCT.price)}
-                                </span>
-                                <span className="text-base text-neutral-400 line-through">
-                                    {formatINR(PRODUCT.compareAt)}
+                                    {formatINR(product.price)}
                                 </span>
                                 <span className="text-xs font-semibold text-[#d46d8c] bg-[#f9ebef] px-2 py-1 rounded">
-                                    SAVE {PRODUCT.discountPct}%
+                                    SAVE {50}%
                                 </span>
                             </div>
-                        </div>
-                        <div className="pt-1">
-                            <StarRating rating={PRODUCT.rating} count={PRODUCT.reviewCount} />
                         </div>
 
                         {/* Trust badges */}
@@ -703,7 +626,7 @@ export default function ProductPage() {
 
                         {variant.inventory <= 10 && (
                             <p className="pt-2 text-sm text-orange-600">
-                                Hurry! Only {variant.inventory} left in stock.
+                                Hurry! Only {product.count} left in stock.
                             </p>
                         )}
 

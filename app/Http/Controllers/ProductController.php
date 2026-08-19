@@ -7,6 +7,8 @@ use Illuminate\Http\RedirectResponse;
 use App\Models\Product;
 use App\Models\Collection;
 use App\Models\Category;
+use Inertia\Inertia;
+use Inertia\Response;
 
 class ProductController extends Controller
 {
@@ -73,5 +75,13 @@ public function destroy(Product $product)
 
     return redirect('/admin')->with('success', 'Product deleted!');
 }
+
+    public function show(Product $product): Response
+    {
+
+        return Inertia::render('Product/Index', [
+            "product" => $product
+        ]);
+    }
 
 }

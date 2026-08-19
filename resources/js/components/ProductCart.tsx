@@ -1,11 +1,12 @@
 import { Product } from "@/types/product";
+import { Link } from "@inertiajs/react";
 
 
 export default function ProductCard({ product }: { product: Product }) {
     return (
         <article className="group">
             <div className="relative overflow-hidden">
-                <a href={"/"}>
+                <Link href={`/products/${product.id}`}>
                     <img
                         src={product.images && product.images[0]}
                         alt={product.name}
@@ -17,7 +18,7 @@ export default function ProductCard({ product }: { product: Product }) {
                         alt=""
                         className="absolute inset-0 aspect-square w-full object-cover opacity-0 transition-opacity duration-300 group-hover:opacity-100"
                     />
-                </a>
+                </Link>
 
                 {/* Sale badge */}
                 <span className="absolute left-3 top-3 bg-black px-2 py-1 text-xs text-white">

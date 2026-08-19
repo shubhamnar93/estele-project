@@ -50,9 +50,12 @@ export const Header = () => {
             <div className="mt-[24px] flex-1">
                 <nav >
                     <ul className="flex justify-between">
+
                         {(collections as Collection[]).map((n, idx) =>
                             <li key={`collections-${idx}`} className="hover:bg-gray-100/90 py-2 w-full flex justify-center uppercase text-[8px] md:text-xs text-neutral-600">
-                                {n.name}
+                                <Link href={`/collections/${n.id}`}>
+                                    {n.name}
+                                </Link>
                             </li>
                         )
                         }
