@@ -11,7 +11,7 @@ export function CartDrawer({ cart }: { cart: Cart }) {
 
     return (
         <Sheet open={open} onOpenChange={setOpen}>
-            <SheetContent side="right" className="flex bg-white border-neutral-300 [&_*]:border-neutral-300 w-full flex-col gap-0 p-0 sm:max-w-md">
+            <SheetContent side="right" className="z-999 flex bg-white border-neutral-300 [&_*]:border-neutral-300 w-full flex-col gap-0 p-0 sm:max-w-md">
                 <SheetDescription className="sr-only">Items currently in your shopping bag</SheetDescription>
                 <header className="flex items-center justify-between border-b px-5 py-4">
                     <SheetTitle className="text-sm font-medium uppercase tracking-[0.18em]">

@@ -9,7 +9,6 @@ import { Collection } from "@/lib/data"
 import { useCart } from "@/lib/cart"
 import { CartDrawer } from "./CartDrawer"
 
-const navs = [{ title: "hasli collection", }, { title: "crystal blooms", }, { title: "best seller", }]
 export const Header = () => {
     const cart = useCart();
     const { auth, collections } = usePage().props;
@@ -19,7 +18,7 @@ export const Header = () => {
             <div className="grid grid-cols-3 items-center">
                 <div>
                     <Link href="">
-                        <p className="flex cursor-not-allowed text-[16px] gap-[2px] items-center text-neutral-600">
+                        <p className="flex w-fit cursor-not-allowed text-[16px] gap-[2px] items-center text-neutral-600">
                             <MapPin height={16} />
                             store locator
                         </p>

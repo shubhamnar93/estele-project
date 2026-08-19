@@ -1,12 +1,19 @@
 import { Product } from "@/types/product";
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 
 
 export type CartLine = Product & { qty: number };
 
 export function useCart() {
-    const [lines, setLines] = useState<CartLine[]>([]);
+    // const [lines, setLines] = useState<CartLine[]>([]);
+    const [lines, setLines] = useState<CartLine[]>(() => {
+        const saved = localStorage.getItem("cart");
+        return saved ? JSON.parse(saved) : [];
+    });
     const [open, setOpen] = useState(false);
+    useEffect(() => {
+        localStorage.setItem("cart", JSON.stringify(lines));
+    }, [lines]);
 
     const add = useCallback((product: Product) => {
         setLines((prev) => {

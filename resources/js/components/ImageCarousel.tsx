@@ -1,3 +1,4 @@
+import { Link } from "@inertiajs/react";
 import { ArrowLeftIcon, ArrowRightIcon } from "lucide-react";
 import { useEffect, useState } from "react";
 
@@ -67,9 +68,9 @@ export default function Slideshow({ slides = [] }: { slides: { image: string, li
         >
             <div className="relative w-full aspect-[2.42/1] max-md:aspect-[3/4]">
                 {slides.map((s, i) => (
-                    <a
+                    <Link
                         key={i}
-                        href={s.link || "#"}
+                        href={"/collections/1"}
                         className="absolute inset-0 transition-opacity duration-1000 ease-in-out"
                         style={{ opacity: i === index ? 1 : 0, zIndex: i === index ? 10 : 0 }}
                         aria-hidden={i !== index}
@@ -80,7 +81,7 @@ export default function Slideshow({ slides = [] }: { slides: { image: string, li
                             className="w-full h-full object-cover"
                             loading={i === 0 ? "eager" : "lazy"}
                         />
-                    </a>
+                    </Link>
                 ))}
             </div>
 
