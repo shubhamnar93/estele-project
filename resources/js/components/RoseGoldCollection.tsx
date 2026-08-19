@@ -1,3 +1,4 @@
+import { Link } from "@inertiajs/react"
 import { ArrowRight } from "lucide-react"
 
 export const RoseGoldCollection = () => {
@@ -21,7 +22,7 @@ export const RoseGoldCollection = () => {
                 <img src="https://estele.co/cdn/shop/files/Rose_Gold_jpg.jpg" className="w-full" />
             </div>
             <div className="pt-4 text-[20px] flex items-center gap-2 underline text-[#cb6b88]">
-                <a className="cursor-pointer hover:text-[#ad3d5f]">shop collection</a>
+                <Link className="cursor-pointer hover:text-[#ad3d5f]" href={"/collections/1"}>shop collection</Link>
                 <ArrowRight height={"20"} />
             </div>
 

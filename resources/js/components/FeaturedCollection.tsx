@@ -1,5 +1,5 @@
-import { Heart, Eye, GitCompareArrows } from "lucide-react";
 import { Product } from "@/types/product";
+import { Link } from "@inertiajs/react";
 
 
 export default function FeaturedProducts({ featuredProducts }: { featuredProducts: Product[] }) {
@@ -9,7 +9,7 @@ export default function FeaturedProducts({ featuredProducts }: { featuredProduct
                 {featuredProducts.map((product: Product) => (
                     <article key={product.id} className="group">
                         <div className="relative aspect-square overflow-hidden bg-[#f5f5f5]">
-                            <a href={"/"}>
+                            <Link href={`/products/${product.id}`}>
                                 <img
                                     src={product.images ? product.images[0] : ""}
                                     alt={product.name}
@@ -25,7 +25,7 @@ export default function FeaturedProducts({ featuredProducts }: { featuredProduct
                                         loading="lazy"
                                     />
                                 )}
-                            </a>
+                            </Link>
 
 
                         </div>

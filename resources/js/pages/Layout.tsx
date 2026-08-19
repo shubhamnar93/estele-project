@@ -6,7 +6,7 @@ import { ReactNode } from "react";
 export default function Layout({ children }: { children: ReactNode }) {
     return (
         <>
-            <div className="top-0 sticky z-9999">
+            <div className="top-0 sticky z-10">
                 <Banner />
                 <Header />
             </div>

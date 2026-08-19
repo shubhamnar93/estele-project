@@ -2,6 +2,8 @@ import { product } from "@/routes";
 import { Product } from "@/types/product";
 import { ArrowLeftIcon, ArrowRightIcon } from "lucide-react";
 import { useState, useMemo } from "react";
+import { CartDrawer } from "./CartDrawer";
+import { useCart } from "@/lib/cart";
 
 /* ------------------------------------------------------------------ */
 /*  Types                                                              */
@@ -151,14 +153,6 @@ function ChevronIcon({ open }: { open: boolean }) {
     );
 }
 
-function DiamondIcon() {
-    return (
-        <svg viewBox="0 0 24 24" className="h-7 w-7" fill="none" stroke="#d46d8c" strokeWidth="1.4">
-            <path d="M6 3h12l3 5-9 13L3 8z" strokeLinejoin="round" />
-            <path d="M3 8h18M9 3l-3 5 6 13M15 3l3 5-6 13" strokeLinejoin="round" />
-        </svg>
-    );
-}
 
 function LegacyIcon() {
     return (
@@ -199,20 +193,6 @@ function TagIcon() {
 /*  Sub-components                                                     */
 /* ------------------------------------------------------------------ */
 
-function StarRating({ rating, count }: { rating: number; count: number }) {
-    return (
-        <div className="flex items-center gap-1">
-            <div className="flex">
-                {[0, 1, 2, 3, 4].map((i) => (
-                    <StarIcon key={i} filled={i < Math.round(rating)} />
-                ))}
-            </div>
-            <span className="text-xs text-neutral-500">
-                {rating.toFixed(1)} ({count} reviews)
-            </span>
-        </div>
-    );
-}
 
 function TrustBadges() {
     return (
@@ -468,6 +448,10 @@ function Gallery({ images }: { images: string[] }) {
 /* ------------------------------------------------------------------ */
 
 export default function ProductPage({ product }: { product: Product }) {
+    const cart = useCart();
+    const { add } = cart;
+
+
     const [selectedSize, setSelectedSize] = useState(VARIANTS[0].size);
     const [qty, setQty] = useState(1);
     const [added, setAdded] = useState(false);
@@ -478,6 +462,7 @@ export default function ProductPage({ product }: { product: Product }) {
     );
 
     const handleAddToCart = () => {
+        add(product)
         setAdded(true);
         setTimeout(() => setAdded(false), 2500);
     };
@@ -640,6 +625,7 @@ export default function ProductPage({ product }: { product: Product }) {
                 {/* USP bar */}
                 <UspBar />
             </div>
+            <CartDrawer cart={cart} />
         </div>
     );
 }

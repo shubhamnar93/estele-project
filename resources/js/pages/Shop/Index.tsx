@@ -4,7 +4,7 @@ import CollectionGrid from "@/components/CollectionGrid"
 import { Product } from "@/types/product"
 import { Collection } from "@/types/collection"
 import { Category } from "@/types/category"
-import { useMemo, useState } from "react"
+import { useEffect, useMemo, useState } from "react"
 
 const sortOptions = [
     { label: "Featured", value: "manual" },

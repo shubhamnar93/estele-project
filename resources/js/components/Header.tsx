@@ -1,4 +1,4 @@
-import { MapPin, Search, ShoppingBasket, SquareArrowRightExit, UserRound } from "lucide-react"
+import { MapPin, Search, ShoppingBag, SquareArrowRightExit, UserRound } from "lucide-react"
 import { Link, usePage } from "@inertiajs/react"
 import {
     InputGroup,
@@ -6,10 +6,14 @@ import {
     InputGroupInput,
 } from "@/components/ui/input-group"
 import { Collection } from "@/lib/data"
+import { useCart } from "@/lib/cart"
+import { CartDrawer } from "./CartDrawer"
 
 const navs = [{ title: "hasli collection", }, { title: "crystal blooms", }, { title: "best seller", }]
 export const Header = () => {
+    const cart = useCart();
     const { auth, collections } = usePage().props;
+
     return (
         <header className="pt-[15px] pb-[27px] px-[30px] bg-white/90 backdrop-blur-lg">
             <div className="grid grid-cols-3 items-center">
@@ -34,7 +38,9 @@ export const Header = () => {
                             <Search />
                         </InputGroupAddon>
                     </InputGroup>
-                    <ShoppingBasket />
+                    <button onClick={() => cart.setOpen(true)}>
+                        <ShoppingBag />
+                    </button>
                     {(auth as any).user ?
 
                         <Link href={"/logout"}>
@@ -62,6 +68,7 @@ export const Header = () => {
                     </ul>
                 </nav>
             </div>
+            <CartDrawer cart={cart} />
         </header>
     )
 }
