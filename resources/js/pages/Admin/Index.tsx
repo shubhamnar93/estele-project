@@ -8,7 +8,7 @@ import { Collection } from "@/types/collection";
 import { Product } from "@/types/product";
 import { Layers, Package, Pencil, Plus, SquareArrowRightExit, Tag, Trash2, X } from "lucide-react";
 import { ReactNode, useState } from "react";
-import { Link, router } from "@inertiajs/react";
+import { Link, router, usePage } from "@inertiajs/react";
 import { store as storeCollection, update as updateCollection, destroy as destroyCollection } from '@/actions/App/Http/Controllers/CollectionController';
 import { store as storeCategory, update as updateCategory, destroy as destroyCategory } from '@/actions/App/Http/Controllers/CategoryController';
 import { store as storeProduct, update as updateProduct, destroy as destroyProduct } from '@/actions/App/Http/Controllers/ProductController';
@@ -17,6 +17,8 @@ import { Form as IntertiaForm } from "@inertiajs/react";
 const nameOf = (list: { id: number; name: string }[], id: number) =>
     list.find((entry) => entry.id === id)?.name ?? "—";
 export default function Admin({ products, collections, categories }: { products: Product[], collections: Collection[], categories: Category[] }) {
+
+    const { errors } = usePage().props;
     const [isOpen, setIsOpen] = useState(false)
     const [title, setTitle] = useState("")
     const [whatTo, setWhatTo] = useState<"products" | "collections" | "categories">("products")
@@ -34,7 +36,6 @@ export default function Admin({ products, collections, categories }: { products:
         if (whatTo == "products" && product) setProduct(product)
         if (whatTo == "categories" && category) setCategory(category)
         if (whatTo == "collections" && collection) setCollection(collection)
-        console.log(collection)
         setIsOpen((o) => !o)
         setTitle(title)
     }
@@ -96,6 +97,11 @@ export default function Admin({ products, collections, categories }: { products:
                 </Tabs>
             </main>
             {isOpen && whatTo === "products" && <Form title={title} onClose={() => handleOnClick({ title: "" })} >
+                {errors.name && (<p className="text-sm text-red-500">{errors.name}</p>)}
+                {errors.price && (<p className="text-sm text-red-500">{errors.price}</p>)}
+                {errors.count && (<p className="text-sm text-red-500">{errors.count}</p>)}
+                {errors.collection_id && (<p className="text-sm text-red-500">{errors.collection_id}</p>)}
+                {errors.category_id && (<p className="text-sm text-red-500">{errors.category_id}</p>)}
 
                 <IntertiaForm onSuccess={() => handleOnClick({ title: "" })} action={title == "Edit" ? updateProduct(product.id) : storeProduct()} className="space-y-4">
                     <InputWithLabel name="name" text="Name" placeholder="name..." value={product.name} />
@@ -145,6 +151,10 @@ export default function Admin({ products, collections, categories }: { products:
             </Form>}
             {isOpen && whatTo === "collections" &&
                 <Form title={title} onClose={() => handleOnClick({ title: "" })} >
+                    {errors.name && (<p className="text-sm text-red-500">{errors.name}</p>)}
+                    {errors.slug && (<p className="text-sm text-red-500">{errors.slug}</p>)}
+                    {errors.imageurl && (<p className="text-sm text-red-500">{errors.imageurl}</p>)}
+                    {errors.description && (<p className="text-sm text-red-500">{errors.description}</p>)}
                     <IntertiaForm action={title == "Edit" ? updateCollection(collection.id) : storeCollection()} className="space-y-4" onSuccess={() => handleOnClick({ title: "" })}>
                         <InputWithLabel name={"name"} text="Name" placeholder="name..." value={collection.name} />
                         <InputWithLabel name={"slug"} text="slug" placeholder="slug..." value={collection.slug} />
@@ -155,6 +165,10 @@ export default function Admin({ products, collections, categories }: { products:
                 </Form>}
             {isOpen && whatTo === "categories" &&
                 <Form title={title} onClose={() => handleOnClick({ title: "" })} >
+                    {errors.name && (<p className="text-sm text-red-500">{errors.name}</p>)}
+                    {errors.slug && (<p className="text-sm text-red-500">{errors.slug}</p>)}
+                    {errors.imageurl && (<p className="text-sm text-red-500">{errors.imageurl}</p>)}
+                    {errors.description && (<p className="text-sm text-red-500">{errors.description}</p>)}
                     <IntertiaForm onSuccess={() => handleOnClick({ title: "" })} action={title == "Edit" ? updateCategory(category.id) : storeCategory()} className="space-y-4">
                         <InputWithLabel name={"name"} text="Name" placeholder="name..." value={category.name} />
                         <InputWithLabel name={"slug"} text="slug" placeholder="slug..." value={category.slug} />

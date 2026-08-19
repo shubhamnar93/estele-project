@@ -26,7 +26,7 @@ public function update(Request $request, Category $category)
     // Validate
     $validated = $request->validate([
         'name' => ['required', 'string', 'max:255'],
-        'slug' => ['required', 'string', 'max:255', 'unique:categories,slug'],
+        'slug' => ['required', 'string', 'max:255', 'unique:categories,slug' . $category->id],
         'description' => ['string', 'max:1000'],
         'imageurl' => ['nullable', 'string', 'max:1000'],
     ]);
