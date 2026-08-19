@@ -66,8 +66,7 @@ export default function Admin({ products, collections, categories }: { products:
                         </TabsList>
                         <div className="mt-8 w-full">
                             <TabsContent value="products">
-                                <div className="flex w-full  items-center justify-between gap-3">
-                                    <input placeholder="Search by name" className="flex max-w-xs h-9 w-full border-1 border-gray-200 rounded-md bg-transparent px-3 py-1 text-base shadow-sm transition-colors" />
+                                <div className="flex w-full  items-center justify-end gap-3">
                                     <Button onClick={() => handleOnClick({ title: "Add Product", product: { id: 0, name: "", updated_at: "", created_at: "", price: 0, count: 0, category_id: 0, collection_id: 0, images: [""], description: "" } })} text="Add Products" />
                                 </div>
                                 <div className="  [&_*]:border-neutral-300 mt-8">
