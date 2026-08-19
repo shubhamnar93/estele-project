@@ -13,7 +13,7 @@ use App\Http\Controllers\Auth\Logout;
 use App\Http\Controllers\StoreLocatorController;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
-Route::get('/storelocator', [StoreLocatorController::class, 'index'])->name('home');
+Route::get('/storelocator', [StoreLocatorController::class, 'index'])->name('storelocator');
 
 
 //collection routes

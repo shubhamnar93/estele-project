@@ -46,7 +46,7 @@ public function destroy(collection $collection)
 {
     $collection->delete();
 
-    return redirect('/admin')->with('success', 'Category deleted!');
+    return redirect('/admin')->with('success', 'collection deleted!');
 }
 
     public function show(Collection $collection): Response

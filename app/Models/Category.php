@@ -11,6 +11,6 @@ class Category extends Model
         'slug',
         'count',
         'description',
-        'imageUrl',
+        'imageurl',
     ];
 }

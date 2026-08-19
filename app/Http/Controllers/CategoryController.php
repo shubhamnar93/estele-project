@@ -12,21 +12,21 @@ class CategoryController extends Controller
     {
         $validated = $request->validate([
             'name' => ['required', 'string', 'max:255'],
-            'slug' => ['required', 'string', 'max:255', 'unique:collections,slug'],
+            'slug' => ['required', 'string', 'max:255', 'unique:categories,slug'],
             'description' => ['string', 'max:1000'],
             'imageUrl' => ['nullable', 'string', 'max:1000'],
         ]);
 
         Category::create($validated);
 
-        return redirect('/admin')->with('success', 'collection created!');
+        return redirect('/admin')->with('success', 'category created!');
 }
 public function update(Request $request, Category $category)
 {
     // Validate
     $validated = $request->validate([
         'name' => ['required', 'string', 'max:255'],
-        'slug' => ['required', 'string', 'max:255', 'unique:collections,slug'],
+        'slug' => ['required', 'string', 'max:255', 'unique:categories,slug'],
         'description' => ['string', 'max:1000'],
         'imageUrl' => ['nullable', 'string', 'max:1000'],
     ]);
@@ -34,13 +34,13 @@ public function update(Request $request, Category $category)
     // Update
     $category->update($validated);
 
-    return redirect('/admin')->with('success', 'collection updated!');
+    return redirect('/admin')->with('success', 'category updated!');
 }
 
 public function destroy(Category $category)
 {
     $category->delete();
 
-    return redirect('/admin')->with('success', 'Product deleted!');
+    return redirect('/admin')->with('success', 'category deleted!');
 }
 }

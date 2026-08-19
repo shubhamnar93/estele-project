@@ -36,7 +36,7 @@ class ProductController extends Controller
                 ->increment('count');
 
 
-            return redirect('/admin')->with('success', 'collection created!');
+            return redirect('/admin')->with('success', 'product created!');
     }
 
     public function update(Request $request, Product $product)

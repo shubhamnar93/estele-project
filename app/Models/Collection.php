@@ -11,6 +11,6 @@ class Collection extends Model
         'slug',
         'count',
         'description',
-        'imageUrl',
+        'imageurl',
     ];
 }
