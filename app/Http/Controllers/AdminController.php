@@ -16,8 +16,8 @@ class AdminController extends Controller
         $products = Product::with(['category', 'collection']) ->latest()
             ->get();
 
-        $categories = Category::orderBy('name')->get(['id', 'name', 'count', 'slug', 'imageurl']);
-        $collections = Collection::orderBy('name')->get(['id', 'name', 'count', 'slug', 'imageurl']);
+        $categories = Category::orderBy('name')->get(['id', 'name', 'count', 'slug','description', 'imageurl']);
+        $collections = Collection::orderBy('name')->get(['id', 'name', 'count', 'slug','description', 'imageurl']);
 
         return Inertia::render('Admin/Index', [
             'products' => $products,

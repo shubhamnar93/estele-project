@@ -14,7 +14,7 @@ class CategoryController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'slug' => ['required', 'string', 'max:255', 'unique:categories,slug'],
             'description' => ['string', 'max:1000'],
-            'imageUrl' => ['nullable', 'string', 'max:1000'],
+            'imageurl' => ['nullable', 'string', 'max:1000'],
         ]);
 
         Category::create($validated);
@@ -28,7 +28,7 @@ public function update(Request $request, Category $category)
         'name' => ['required', 'string', 'max:255'],
         'slug' => ['required', 'string', 'max:255', 'unique:categories,slug'],
         'description' => ['string', 'max:1000'],
-        'imageUrl' => ['nullable', 'string', 'max:1000'],
+        'imageurl' => ['nullable', 'string', 'max:1000'],
     ]);
 
     // Update

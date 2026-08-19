@@ -55,7 +55,7 @@ export default function CategoryCarousel({ heading, categories, catOrCol }: { ca
                             transform: `translateX(-${page * 100}%)`,
                         }}
                     >
-                        {categories.map((c) => (
+                        {categories.splice(0, 9).map((c) => (
                             <a
                                 key={c.id}
                                 href={`/collections/${c.id}`}

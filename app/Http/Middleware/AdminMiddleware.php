@@ -15,7 +15,7 @@ class AdminMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (!auth()->check() || auth()->user()->name !== 'superuser admin') {
+        if (!auth()->check() || auth()->user()->email !== 'admin@admin.com') {
             abort(403);
         }
 

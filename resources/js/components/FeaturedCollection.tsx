@@ -6,7 +6,7 @@ export default function FeaturedProducts({ featuredProducts }: { featuredProduct
     return (
         <section className="mx-auto mb-12 mt-12 max-w-[1600px] px-4">
             <div className="grid grid-cols-2 gap-x-2.5 gap-y-8 md:grid-cols-3 md:gap-x-7 lg:grid-cols-4">
-                {featuredProducts.map((product: Product) => (
+                {featuredProducts.slice(0, 4).map((product: Product) => (
                     <article key={product.id} className="group">
                         <div className="relative aspect-square overflow-hidden bg-[#f5f5f5]">
                             <Link href={`/products/${product.id}`}>

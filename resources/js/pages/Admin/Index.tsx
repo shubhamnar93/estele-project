@@ -34,6 +34,7 @@ export default function Admin({ products, collections, categories }: { products:
         if (whatTo == "products" && product) setProduct(product)
         if (whatTo == "categories" && category) setCategory(category)
         if (whatTo == "collections" && collection) setCollection(collection)
+        console.log(collection)
         setIsOpen((o) => !o)
         setTitle(title)
     }
@@ -96,7 +97,7 @@ export default function Admin({ products, collections, categories }: { products:
             </main>
             {isOpen && whatTo === "products" && <Form title={title} onClose={() => handleOnClick({ title: "" })} >
 
-                <IntertiaForm action={title == "Edit" ? updateProduct(product.id) : storeProduct()} className="space-y-4">
+                <IntertiaForm onSuccess={() => handleOnClick({ title: "" })} action={title == "Edit" ? updateProduct(product.id) : storeProduct()} className="space-y-4">
                     <InputWithLabel name="name" text="Name" placeholder="name..." value={product.name} />
                     <div className="grid gap-4 sm:grid-cols-2 ">
                         <InputWithLabel name="price" text="Price" placeholder="999..." value={product.price} />
@@ -144,20 +145,20 @@ export default function Admin({ products, collections, categories }: { products:
             </Form>}
             {isOpen && whatTo === "collections" &&
                 <Form title={title} onClose={() => handleOnClick({ title: "" })} >
-                    <IntertiaForm action={title == "Edit" ? updateCollection(collection.id) : storeCollection()} className="space-y-4">
-                        <InputWithLabel name={"name"} text="Name" placeholder="name..." value={category.name} />
-                        <InputWithLabel name={"slug"} text="slug" placeholder="slug..." value={category.slug} />
-                        <InputWithLabel name={"imageUrl"} text="Image Url" placeholder="https://..." value={category.imageurl} />
-                        <InputWithLabel name={"description"} text="Description" placeholder="description..." value={category.description} />
+                    <IntertiaForm action={title == "Edit" ? updateCollection(collection.id) : storeCollection()} className="space-y-4" onSuccess={() => handleOnClick({ title: "" })}>
+                        <InputWithLabel name={"name"} text="Name" placeholder="name..." value={collection.name} />
+                        <InputWithLabel name={"slug"} text="slug" placeholder="slug..." value={collection.slug} />
+                        <InputWithLabel name={"imageurl"} text="Image Url" placeholder="https://..." value={collection.imageurl} />
+                        <InputWithLabel name={"description"} text="Description" placeholder="description..." value={collection.description} />
                         <FormButton type="submit" title={title} onClose={() => handleOnClick({ title: "" })} />
                     </IntertiaForm>
                 </Form>}
             {isOpen && whatTo === "categories" &&
                 <Form title={title} onClose={() => handleOnClick({ title: "" })} >
-                    <IntertiaForm action={title == "Edit" ? updateCategory(category.id) : storeCategory()} className="space-y-4">
+                    <IntertiaForm onSuccess={() => handleOnClick({ title: "" })} action={title == "Edit" ? updateCategory(category.id) : storeCategory()} className="space-y-4">
                         <InputWithLabel name={"name"} text="Name" placeholder="name..." value={category.name} />
                         <InputWithLabel name={"slug"} text="slug" placeholder="slug..." value={category.slug} />
-                        <InputWithLabel name={"image url"} text="Image Url" placeholder="https://..." value={category.imageurl} />
+                        <InputWithLabel name={"imageurl"} text="Image Url" placeholder="https://..." value={category.imageurl} />
                         <InputWithLabel name={"description"} text="Description" placeholder="description..." value={category.description} />
                         <FormButton title={title} onClose={() => handleOnClick({ title: "" })} />
                     </IntertiaForm>
@@ -260,7 +261,7 @@ export const TableCardCollection = ({ handleOnClick, collections, }: { collectio
                 <Table className="border-neutral-300">
                     <TableHeader className="">
                         <TableRow>
-                            <TableHead>Category</TableHead>
+                            <TableHead>Collection</TableHead>
                             <TableHead>Slug</TableHead>
                             <TableHead>products</TableHead>
                         </TableRow>

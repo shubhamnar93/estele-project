@@ -5,10 +5,10 @@ import {
     InputGroupAddon,
     InputGroupInput,
 } from "@/components/ui/input-group"
-import { Collection } from "@/lib/data"
 import { useCart } from "@/lib/cart"
 import { CartDrawer } from "./CartDrawer"
 import { ReactNode, useState } from "react"
+import { Collection } from "@/types/collection"
 
 export const Header = () => {
     const cart = useCart();

@@ -18,7 +18,7 @@ class CollectionController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'slug' => ['required', 'string', 'max:255', 'unique:collections,slug'],
             'description' => ['string', 'max:1000'],
-            'imageUrl' => ['nullable', 'string', 'max:1000'],
+            'imageurl' => ['nullable', 'string', 'max:1000'],
         ]);
 
 
@@ -26,14 +26,13 @@ class CollectionController extends Controller
 
         return redirect('/admin')->with('success', 'collection created!');
 }
-public function update(Request $request, Collection $collection)
-{
+public function update(Request $request, Collection $collection) {
     // Validate
     $validated = $request->validate([
         'name' => ['required', 'string', 'max:255'],
-        'slug' => ['required', 'string', 'max:255', 'unique:collections,slug'],
-        'description' => ['string', 'max:1000'],
-        'imageUrl' => ['nullable', 'string', 'max:1000'],
+        'slug' => ['required', 'string', 'max:255', 'unique:collections,slug'. $collection->id],
+        'description' => ['string', 'max:1000', 'nullable'],
+        'imageurl' => ['nullable', 'string', 'max:1000'],
     ]);
 
     // Update
