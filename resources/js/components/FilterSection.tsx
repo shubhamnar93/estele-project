@@ -5,13 +5,30 @@ import CategoryFilter from "./CategoryFilter";
 import { Category } from "@/types/category";
 
 
-export default function CollectionHeader({ categories, selected, setSelected, sortOptions, selectedSort, setSelectedSort }: {
+export default function CollectionHeader({
+    categories,
+    selected,
+    setSelected,
+    sortOptions,
+    selectedSort,
+    setSelectedSort,
+    priceMin = 0,
+    priceMax = 2999950,
+    price,
+    setPrice,
+}: {
     categories: Category[],
     sortOptions: { label: string, value: string }[],
     selectedSort: string,
     setSelectedSort: (a: string) => void,
     selected: Set<number>,
     setSelected: (newSet: (a: Set<number>) => Set<number>) => void,
+    priceMin: number,
+    priceMax: number,
+
+    price: number[],
+    setPrice: (a: [number, number]) => void,
+
 }) {
     const [sortOpen, setSortOpen] = useState(false);
     const [showFilter, setShowFilter] = useState(false)
@@ -108,7 +125,7 @@ export default function CollectionHeader({ categories, selected, setSelected, so
                 </div>
             </div>
             {showFilter &&
-                <FilterSidebar categories={categories} selected={selected} setSelected={(a) => setSelected(a)} />
+                <FilterSidebar price={price} setPrice={(a) => setPrice(a)} priceMax={priceMax} priceMin={priceMin} categories={categories} selected={selected} setSelected={(a) => setSelected(a)} />
             }
             {/* <CategoryFilter */}
             {/* /> */}

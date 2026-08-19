@@ -20,15 +20,19 @@ export default function Shop({ products, collection, categories }: { categories:
     const [selected, setSelected] = useState<Set<number>>(new Set());
     const [selectedSort, setSelectedSort] = useState("manual");
 
-    const productShown = useMemo(() => {
+
+    const [price, setPrice] = useState<[number, number]>([0, 0]);
+
+    const { productShown, minPrice, maxPrice } = useMemo(() => {
         // 1. Filter by category
         const filtered = products.filter((p) => {
             if (selected.size === 0) return true;
+
             return selected.has(p.category_id);
         });
 
         // 2. Sort
-        return [...filtered].sort((a, b) => {
+        const sorted = [...filtered].sort((a, b) => {
             switch (selectedSort) {
                 case "title-ascending":
                     return a.name.localeCompare(b.name);
@@ -43,19 +47,54 @@ export default function Shop({ products, collection, categories }: { categories:
                     return Number(b.price) - Number(a.price);
 
                 case "created-ascending":
-                    return new Date(a.created_at).getTime() -
-                        new Date(b.created_at).getTime();
+                    return (
+                        new Date(a.created_at).getTime() -
+                        new Date(b.created_at).getTime()
+                    );
 
                 case "created-descending":
-                    return new Date(b.created_at).getTime() -
-                        new Date(a.created_at).getTime();
+                    return (
+                        new Date(b.created_at).getTime() -
+                        new Date(a.created_at).getTime()
+                    );
 
                 case "manual":
                 default:
                     return 0;
             }
         });
-    }, [products, selected, selectedSort]);
+
+        // 3. Calculate actual price range
+        const prices = sorted.map((p) => Number(p.price));
+
+        const actualMinPrice = prices.length
+            ? Math.min(...prices)
+            : 0;
+
+        const actualMaxPrice = prices.length
+            ? Math.max(...prices)
+            : 0;
+
+        // 4. Determine selected price range
+        const selectedMinPrice = price[0] || actualMinPrice;
+        const selectedMaxPrice = price[1] || actualMaxPrice;
+
+        // 5. Filter by price
+        const productShown = sorted.filter((p) => {
+            const productPrice = Number(p.price);
+
+            return (
+                productPrice >= selectedMinPrice &&
+                productPrice <= selectedMaxPrice
+            );
+        });
+
+        return {
+            productShown,
+            minPrice: actualMinPrice,
+            maxPrice: actualMaxPrice,
+        };
+    }, [products, selected, selectedSort, price]);
 
 
     return (
@@ -66,7 +105,7 @@ export default function Shop({ products, collection, categories }: { categories:
                 <p>{collection.description}</p>
             </div>
             <section className="max-w-[1200px] mt-12 mb-0 mx-auto px-4">
-                <CollectionHeader selectedSort={selectedSort} setSelectedSort={(a: string) => setSelectedSort(a)} categories={categories} sortOptions={sortOptions} selected={selected} setSelected={setSelected} />
+                <CollectionHeader price={price} setPrice={setPrice} priceMax={maxPrice} priceMin={minPrice} selectedSort={selectedSort} setSelectedSort={(a: string) => setSelectedSort(a)} categories={categories} sortOptions={sortOptions} selected={selected} setSelected={setSelected} />
             </section>
             {productShown && (
                 <CollectionGrid products={productShown} />

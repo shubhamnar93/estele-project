@@ -18,7 +18,7 @@ function PriceRangeSlider({
     step = 1,
     initial = [0, 299950],
     format = (v: any) =>
-        "₹" + Math.round(v / 100).toLocaleString("en-IN"),
+        "₹" + Math.round(v).toLocaleString("en-IN"),
     onChange,
 }: { min: number, max: number, step?: number, initial: number[], format?: (v: any) => ReactNode, onChange: (next: any, high: any) => void }) {
     const trackRef = useRef(null);
@@ -167,9 +167,11 @@ function FacetValue({ label, checked, onToggle }: { label: string, checked: bool
 export default function FilterSidebar({
     categories,
     priceMin = 0,
-    priceMax = 299950,
+    priceMax = 2999950,
     selected,
     setSelected,
+    price,
+    setPrice,
     onApply,
 }: {
     categories: Category[]
@@ -178,9 +180,10 @@ export default function FilterSidebar({
     selected: Set<number>,
     setSelected: (newSet: (a: Set<number>) => Set<number>) => void,
     onApply?: (selected: any, price: number[]) => void
+    price: number[],
+    setPrice: (a: number[]) => void,
 }) {
 
-    const [price, setPrice] = useState([priceMin, priceMax]);
 
     const toggle = (label: number) => {
         setSelected((prev: Set<number>) => {
