@@ -2,25 +2,19 @@ import { useState } from "react";
 import { SlidersHorizontal, ChevronDown, X } from "lucide-react";
 import FilterSidebar from "./FilterSidebar";
 import CategoryFilter from "./CategoryFilter";
+import { Category } from "@/types/category";
 
-const sortOptions = [
-    { label: "Featured", value: "manual" },
-    { label: "Most relevant", value: "most-relevant" },
-    { label: "Best selling", value: "best-selling" },
-    { label: "Alphabetically, A-Z", value: "title-ascending" },
-    { label: "Alphabetically, Z-A", value: "title-descending" },
-    { label: "Price, low to high", value: "price-ascending" },
-    { label: "Price, high to low", value: "price-descending" },
-    { label: "Date, old to new", value: "created-ascending" },
-    { label: "Date, new to old", value: "created-descending" },
-];
 
-export default function CollectionHeader() {
+export default function CollectionHeader({ categories, selected, setSelected, sortOptions, selectedSort, setSelectedSort }: {
+    categories: Category[],
+    sortOptions: { label: string, value: string }[],
+    selectedSort: string,
+    setSelectedSort: (a: string) => void,
+    selected: Set<number>,
+    setSelected: (newSet: (a: Set<number>) => Set<number>) => void,
+}) {
     const [sortOpen, setSortOpen] = useState(false);
-    const [selectedSort, setSelectedSort] = useState("manual");
     const [showFilter, setShowFilter] = useState(false)
-    const [selected, setSelected] = useState<string[]>(["Bracelets"]);
-
 
     const selectedLabel =
         sortOptions.find((option) => option.value === selectedSort)?.label ??
@@ -114,10 +108,10 @@ export default function CollectionHeader() {
                 </div>
             </div>
             {showFilter &&
-                <FilterSidebar categories={[{ label: "hello", count: 2 }, { label: "hello", count: 2 }, { label: "hello", count: 2 }]} />
+                <FilterSidebar categories={categories} selected={selected} setSelected={(a) => setSelected(a)} />
             }
-            <CategoryFilter
-            />
+            {/* <CategoryFilter */}
+            {/* /> */}
         </>
     );
 }

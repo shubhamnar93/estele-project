@@ -19,7 +19,7 @@ export default function Index({ featuredProducts, categories, collections, lates
                 <FeaturedCollection featuredProducts={featuredProducts} />
                 <CategoryCarousel catOrCol="collection" heading="Shop By Collections" categories={collections} />
                 <FeaturedProducts text="New arrivals" products={latestProducts} />
-                <BlingBanner />
+                {/* <BlingBanner /> */}
                 <FeaturedProducts text="best sellers" products={bestSellers} />
             </main>
         </Layout>

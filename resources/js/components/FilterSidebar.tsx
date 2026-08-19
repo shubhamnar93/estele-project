@@ -1,4 +1,4 @@
-import { Category, dummyCategories } from "@/lib/data";
+import { Category } from "@/types/category";
 import React, { useState, useRef, useCallback, useEffect, ReactNode } from "react";
 
 /**
@@ -125,7 +125,7 @@ function PriceRangeSlider({
  * Single facet value row (checkbox + label + count).
  * `checked` reflects whether this filter is currently active.
  */
-function FacetValue({ label, count, checked, onToggle }: { label: string, count: number, checked: boolean, onToggle: () => void }) {
+function FacetValue({ label, checked, onToggle }: { label: string, checked: boolean, onToggle: () => void }) {
     return (
         <li>
             <button
@@ -150,9 +150,6 @@ function FacetValue({ label, count, checked, onToggle }: { label: string, count:
                     )}
                 </span>
                 <span>{label}</span>
-                <span className="t4s-value-count text-neutral-400">
-                    ({count})
-                </span>
             </button>
         </li>
     );
@@ -168,27 +165,31 @@ function FacetValue({ label, count, checked, onToggle }: { label: string, count:
  *   onApply     {fn}      (selectedCats, [low, high]) => void
  */
 export default function FilterSidebar({
+    categories,
     priceMin = 0,
     priceMax = 299950,
+    selected,
+    setSelected,
     onApply,
 }: {
+    categories: Category[]
     priceMin?: number,
     priceMax?: number,
+    selected: Set<number>,
+    setSelected: (newSet: (a: Set<number>) => Set<number>) => void,
     onApply?: (selected: any, price: number[]) => void
 }) {
 
-    const [selected, setSelected] = useState(new Set());
     const [price, setPrice] = useState([priceMin, priceMax]);
 
-    const toggle = (label: string) => {
-        setSelected((prev) => {
+    const toggle = (label: number) => {
+        setSelected((prev: Set<number>) => {
             const next = new Set(prev);
             if (next.has(label)) next.delete(label);
             else next.add(label);
             return next;
         });
     };
-    const categories = dummyCategories
 
     return (
         <div
@@ -211,11 +212,9 @@ export default function FilterSidebar({
                     <ul className="t4s-filter__values is--style-checkbox flex flex-col gap-0.5">
                         {categories.map((c) => {
 
-                            console.log(c);
                             return (
-                                < FacetValue key={c.id}
+                                <FacetValue key={c.id}
                                     label={c.name}
-                                    count={c.count}
                                     checked={selected.has(c.id)}
                                     onToggle={() => toggle(c.id)}
                                 />

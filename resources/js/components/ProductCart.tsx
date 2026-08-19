@@ -4,13 +4,13 @@ import { Link } from "@inertiajs/react";
 
 export default function ProductCard({ product }: { product: Product }) {
     return (
-        <article className="group">
+        <article className="group ">
             <div className="relative overflow-hidden">
                 <Link href={`/products/${product.id}`}>
                     <img
                         src={product.images && product.images[0]}
                         alt={product.name}
-                        className="aspect-square w-full object-cover transition-opacity duration-300 group-hover:opacity-0"
+                        className="aspect-square rounded-xl w-full object-cover transition-opacity duration-300 group-hover:opacity-0"
                     />
 
                     <img

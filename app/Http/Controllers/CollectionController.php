@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use App\Models\Collection;
-use Illuminate\Http\RedirectResponse;
 use App\Models\Product;
+use App\Models\Category;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -54,10 +55,18 @@ public function destroy(collection $collection)
             ->where('collection_id', $collection->id)
             ->latest()
             ->get();
+        $categories = Category::whereIn(
+                'id',
+                $products->pluck('category_id')->unique()
+            )
+            ->orderBy('name')
+            ->get(['id', 'name', 'count', 'slug', 'imageurl']);
+
 
         return Inertia::render('Shop/Index', [
             "products" => $products,
-            "collection" => $collection
+            "collection" => $collection,
+            "categories" => $categories
         ]);
     }
 }
