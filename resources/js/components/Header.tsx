@@ -1,4 +1,4 @@
-import { MapPin, Search, ShoppingBag, SquareArrowRightExit, UserRound } from "lucide-react"
+import { MapPin, Search, ShieldUser, ShoppingBag, SquareArrowRightExit, UserRound } from "lucide-react"
 import { Link, usePage } from "@inertiajs/react"
 import {
     InputGroup,
@@ -11,18 +11,25 @@ import { CartDrawer } from "./CartDrawer"
 
 export const Header = () => {
     const cart = useCart();
-    const { auth, collections } = usePage().props;
+    const { auth, collections, isAdmin } = usePage().props;
 
     return (
         <header className="pt-[15px] pb-[27px] px-[30px] bg-white/90 backdrop-blur-lg">
             <div className="grid grid-cols-3 items-center">
                 <div>
-                    <Link href="">
-                        <p className="flex w-fit cursor-not-allowed text-[16px] gap-[2px] items-center text-neutral-600">
-                            <MapPin height={16} />
-                            store locator
-                        </p>
-                    </Link>
+                    {isAdmin ?
+                        <Link href="/admin">
+                            <p className="flex w-fit text-[16px] gap-[2px] items-center text-neutral-600">
+                                <ShieldUser height={24} />
+                                Admin Pannel
+                            </p>
+                        </Link> : <Link href="">
+                            <p className="flex w-fit cursor-not-allowed text-[16px] gap-[2px] items-center text-neutral-600">
+                                <MapPin height={16} />
+                                store locator
+                            </p>
+                        </Link>
+                    }
                 </div>
                 <div className="flex items-center justify-center">
                     <Link href="/">
@@ -42,7 +49,7 @@ export const Header = () => {
                     </button>
                     {(auth as any).user ?
 
-                        <Link href={"/logout"}>
+                        <Link href={"/logout"} method="post">
                             <SquareArrowRightExit />
                         </Link>
                         :

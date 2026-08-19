@@ -15,44 +15,49 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 
 
 //collection routes
-Route::post('/collections', [CollectionController::class, 'store']);
-Route::put('/collections/{collection}', [CollectionController::class, 'update'])
-    ->name('collections.update');
 Route::get('/collections/{collection}', [CollectionController::class, 'show'])
     ->name('collections.show');
-Route::delete('/collections/{collection}', [CollectionController::class, 'destroy']);
 
-//category routes
-Route::post('/categories', [CategoryController::class, 'store']);
-Route::put('/categories/{category}', [CategoryController::class, 'update'])
-    ->name('categories.update');
-Route::delete('/categories/{category}', [CategoryController::class, 'destroy']);
-
-//products routes
-Route::post('/products', [ProductController::class, 'store']);
-Route::put('/products/{product}', [ProductController::class, 'update'])
-    ->name('products.update');
+//products
 Route::get('/products/{product}', [ProductController::class, 'show'])
     ->name('product.show');
-Route::delete('/products/{product}', [ProductController::class, 'destroy']);
 
 Route::inertia('/shop', 'Shop/Index')->name('shop');
 Route::inertia('/product', 'Product/Index')->name('product');
 
-//register
-Route::inertia('/signup', 'SignUp/Index')->name('signup');
-Route::post('/register', Register::class)
-    ->middleware('guest');
+Route::middleware(['guest'])->group(function () {
+    //register
+    Route::inertia('/signup', 'SignUp/Index')->name('signup');
+    Route::post('/register', Register::class);
 
-//login
-Route::inertia('/login', 'Login/Index')->name('signup');
-Route::post('/login', Login::class)
-    ->middleware('guest');
+    //login
+    Route::inertia('/login', 'Login/Index')->name('login');
+    Route::post('/login', Login::class);
+});
 
-//admin
-Route::get('/admin', [AdminController::class, 'index'])
-    ->name('admin')
-    ->middleware('admin');
-//logout
-Route::post('/logout', Logout::class)
-    ->middleware('admin');
+Route::middleware(['auth'])->group(function () {
+    Route::post('/logout', Logout::class)
+        ->middleware('auth');
+});
+
+Route::middleware(['auth', 'admin'])->group(function () {
+    Route::get('/admin', [AdminController::class, 'index'])
+        ->name('admin');
+
+    Route::post('/collections', [CollectionController::class, 'store']);
+    Route::put('/collections/{collection}', [CollectionController::class, 'update'])
+        ->name('collections.update');
+    Route::delete('/collections/{collection}', [CollectionController::class, 'destroy']);
+
+    //category routes
+    Route::post('/categories', [CategoryController::class, 'store']);
+    Route::put('/categories/{category}', [CategoryController::class, 'update'])
+        ->name('categories.update');
+    Route::delete('/categories/{category}', [CategoryController::class, 'destroy']);
+
+    //products routes
+    Route::post('/products', [ProductController::class, 'store']);
+    Route::put('/products/{product}', [ProductController::class, 'update'])
+        ->name('products.update');
+    Route::delete('/products/{product}', [ProductController::class, 'destroy']);
+});

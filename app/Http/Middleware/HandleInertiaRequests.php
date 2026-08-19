@@ -36,12 +36,14 @@ class HandleInertiaRequests extends Middleware
      */
     public function share(Request $request): array
     {
+        $isAdmin = $request->user() && $request->user()->name === "superuser admin";
         return [
             ...parent::share($request),
             'name' => config('app.name'),
             'auth' => [
                 'user' => $request->user(),
             ],
+            'isAdmin'=> $isAdmin,
             'collections' => Collection::orderBy('name')->get([
                 'id',
                 'name',

@@ -8,7 +8,7 @@ import { Collection } from "@/types/collection";
 import { Product } from "@/types/product";
 import { Layers, Package, Pencil, Plus, SquareArrowRightExit, Tag, Trash2, X } from "lucide-react";
 import { ReactNode, useState } from "react";
-import { router } from "@inertiajs/react";
+import { Link, router } from "@inertiajs/react";
 import { store as storeCollection, update as updateCollection, destroy as destroyCollection } from '@/actions/App/Http/Controllers/CollectionController';
 import { store as storeCategory, update as updateCategory, destroy as destroyCategory } from '@/actions/App/Http/Controllers/CategoryController';
 import { store as storeProduct, update as updateProduct, destroy as destroyProduct } from '@/actions/App/Http/Controllers/ProductController';
@@ -45,10 +45,10 @@ export default function Admin({ products, collections, categories }: { products:
                         <p className="text-xs uppercase tracking-[0.4em] text-[#796360]">Estele</p>
                         <h1 className="font-serif text-3xl tracking-tight">Catalogue Admin</h1>
                     </div>
-                    <button className="bg-[#fef8fa] hover:bg-[#ffd9d1] hover:text-[#472022] border-1 h-9 px-4 py-2 border-[#e7dbd8] inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium cursor-pointer transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 disabled:cursor-not-allowed [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0">
+                    <Link href={"/logout"} method="post" className="bg-[#fef8fa] hover:bg-[#ffd9d1] hover:text-[#472022] border-1 h-9 px-4 py-2 border-[#e7dbd8] inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium cursor-pointer transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 disabled:cursor-not-allowed [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0">
                         <SquareArrowRightExit />
                         Logout
-                    </button>
+                    </Link>
                 </div>
             </header>
             <main className="mx-auto max-w-6xl space-y-8 px-6 py-10">

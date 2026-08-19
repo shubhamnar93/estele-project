@@ -5,7 +5,6 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 export type CartLine = Product & { qty: number };
 
 export function useCart() {
-    // const [lines, setLines] = useState<CartLine[]>([]);
     const [lines, setLines] = useState<CartLine[]>(() => {
         const saved = localStorage.getItem("cart");
         return saved ? JSON.parse(saved) : [];
