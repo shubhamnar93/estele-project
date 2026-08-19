@@ -128,7 +128,7 @@ export const Header = () => {
 
                             <li>
                                 <Link
-                                    href=""
+                                    href="/storelocator"
                                     className="flex items-center gap-3 py-3 text-sm text-neutral-600"
                                 >
                                     <MapPin size={17} />
@@ -185,8 +185,8 @@ export const Header = () => {
                             </p>
                         </Link>
                     ) : (
-                        <Link href="">
-                            <p className="flex w-fit cursor-not-allowed text-[16px] gap-[2px] items-center text-neutral-600">
+                        <Link href="/storelocator">
+                            <p className="flex w-fit text-[16px] gap-[2px] items-center text-neutral-600">
                                 <MapPin height={16} />
                                 store locator
                             </p>
@@ -250,7 +250,7 @@ export const Header = () => {
                 <nav>
                     <ul className="flex justify-between">
 
-                        {(collections as Collection[]).map((n) => (
+                        {(collections as Collection[]).slice(0, 8).map((n) => (
                             <li
                                 key={n.id}
                                 className="hover:bg-gray-100/90 py-2 w-full flex justify-center uppercase text-[8px] md:text-xs text-neutral-600"

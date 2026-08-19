@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { SlidersHorizontal, ChevronDown, X } from "lucide-react";
 import FilterSidebar from "./FilterSidebar";
-import CategoryFilter from "./CategoryFilter";
 import { Category } from "@/types/category";
 
 

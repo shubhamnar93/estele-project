@@ -10,8 +10,10 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\Auth\Register;
 use App\Http\Controllers\Auth\Login;
 use App\Http\Controllers\Auth\Logout;
+use App\Http\Controllers\StoreLocatorController;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('/storelocator', [StoreLocatorController::class, 'index'])->name('home');
 
 
 //collection routes
