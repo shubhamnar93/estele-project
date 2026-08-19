@@ -126,8 +126,6 @@ export default function CollectionHeader({
             {showFilter &&
                 <FilterSidebar price={price} setPrice={(a) => setPrice(a)} priceMax={priceMax} priceMin={priceMin} categories={categories} selected={selected} setSelected={(a) => setSelected(a)} />
             }
-            {/* <CategoryFilter */}
-            {/* /> */}
         </>
     );
 }

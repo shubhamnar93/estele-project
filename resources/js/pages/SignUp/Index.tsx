@@ -1,7 +1,8 @@
 import { InputWithLabel } from "@/components/InputWithLabel";
-import { Form, Link } from "@inertiajs/react";
+import { Form, Link, usePage } from "@inertiajs/react";
 
 export default function SignUp() {
+    const { errors } = usePage().props;
     return (
         <div>
 
@@ -11,10 +12,23 @@ export default function SignUp() {
                     <p className="text-[#796360] text-sm">Sing up and explore our product</p>
                 </div>
                 <Form action={"/register"} method={"POST"} className="gap-4 space-y-4">
-                    <InputWithLabel name="name" value={""} placeholder="john doe" text={"Username"} />
-                    <InputWithLabel name="email" value={""} placeholder="jane@gmail.com" text={"Email"} />
-
-                    <InputWithLabel name="password" value={""} placeholder="password..." text={"Password"} />
+                    <div>
+                        <InputWithLabel name="name" value={""} placeholder="john doe" text={"Username"} />
+                        {errors.name && (
+                            <p className="text-sm text-red-500">{errors.name}</p>
+                        )}</div>
+                    <div>
+                        <InputWithLabel name="email" value={""} placeholder="jane@gmail.com" text={"Email"} />
+                        {errors.email && (
+                            <p className="text-sm text-red-500">{errors.email}</p>
+                        )}
+                    </div>
+                    <div>
+                        <InputWithLabel name="password" value={""} placeholder="password..." text={"Password"} />
+                        {errors.password && (
+                            <p className="text-sm text-red-500">{errors.password}</p>
+                        )}
+                    </div>
                     <button type="submit" className={"w-full bg-black text-white py-2 rounded-sm"}>Sign Up</button>
                     <span className="w-full flex justify-center"> Already have account?{' '}<Link href={"/login"}>Login</Link></span>
                 </Form>
