@@ -23,6 +23,7 @@ Estele is a full-stack e-commerce storefront built with **Laravel** and **React*
 - **Storefront** — home page, shop listing, individual product pages, collection pages, and a store locator
 - **Search** — product search endpoint
 - **Auth** — user registration and login (guest-only routes), logout for authenticated users
+- **Cart** — client-side cart with add, remove, and quantity management using browser local storage
 - **Admin panel** — protected by `auth` + `admin` middleware, with full CRUD for:
   - Categories
   - Collections
