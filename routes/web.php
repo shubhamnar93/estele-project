@@ -18,6 +18,8 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/collections/{collection}', [CollectionController::class, 'show'])
     ->name('collections.show');
 
+Route::get('/search', [ProductController::class, 'search'])->name('search');
+
 //products
 Route::get('/products/{product}', [ProductController::class, 'show'])
     ->name('product.show');

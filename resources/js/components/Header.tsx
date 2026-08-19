@@ -1,5 +1,5 @@
 import { MapPin, Search, ShieldUser, ShoppingBag, SquareArrowRightExit, UserRound } from "lucide-react"
-import { Link, usePage } from "@inertiajs/react"
+import { Link, router, usePage } from "@inertiajs/react"
 import {
     InputGroup,
     InputGroupAddon,
@@ -8,10 +8,12 @@ import {
 import { Collection } from "@/lib/data"
 import { useCart } from "@/lib/cart"
 import { CartDrawer } from "./CartDrawer"
+import { useState } from "react"
 
 export const Header = () => {
     const cart = useCart();
     const { auth, collections, isAdmin } = usePage().props;
+    const [q, setQ] = useState('')
 
     return (
         <header className="pt-[15px] pb-[27px] px-[30px] bg-white/90 backdrop-blur-lg">
@@ -38,12 +40,18 @@ export const Header = () => {
                     </Link>
                 </div>
                 <div className="flex items-center text-neutral-600 gap-3 justify-end">
-                    <InputGroup className="max-w-xs h-[40px]">
-                        <InputGroupInput placeholder="Search..." />
-                        <InputGroupAddon>
-                            <Search />
-                        </InputGroupAddon>
-                    </InputGroup>
+                    <form onSubmit={(e) => {
+                        e.preventDefault()
+                        router.get('/search', { q }, { preserveState: true })
+                    }}>
+                        <InputGroup className="max-w-xs h-[40px]">
+                            <InputGroupInput placeholder="Search..." value={q}
+                                onChange={(e) => setQ(e.target.value)} />
+                            <InputGroupAddon>
+                                <Search />
+                            </InputGroupAddon>
+                        </InputGroup>
+                    </form>
                     <button onClick={() => cart.setOpen(true)}>
                         <ShoppingBag />
                     </button>
