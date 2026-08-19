@@ -5,7 +5,6 @@ import { FREE_SHIPPING_THRESHOLD, formatINR, type Cart } from "@/lib/cart";
 
 export function CartDrawer({ cart }: { cart: Cart }) {
     const { open, setOpen, lines, setQty, remove, subtotal, count } = cart;
-    console.log(lines)
     const remaining = Math.max(0, FREE_SHIPPING_THRESHOLD - subtotal);
     const progress = Math.min(100, (subtotal / FREE_SHIPPING_THRESHOLD) * 100);
 
