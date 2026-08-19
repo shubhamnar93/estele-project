@@ -42,6 +42,7 @@ Estele is a full-stack e-commerce storefront built with **Laravel** and **React*
 
 ```bash
 composer run setup
+php artisan migrate:fresh --seed
 composer run dev
 ```
 
