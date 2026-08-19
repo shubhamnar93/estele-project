@@ -9,13 +9,14 @@ use App\Models\Product;
 use App\Models\Category;
 use Inertia\Inertia;
 use Inertia\Response;
+use Illuminate\Validation\Rule;
 
 class CollectionController extends Controller
 {
  public function store( Request $request): RedirectResponse
     {
         $validated = $request->validate([
-            'name' => ['required', 'string', 'max:255'],
+            'name' => ['required', 'string', 'max:255', 'unique:collections,name'],
             'slug' => ['required', 'string', 'max:255', 'unique:collections,slug'],
             'description' => ['string', 'max:1000'],
             'imageurl' => ['nullable', 'string', 'max:1000'],
@@ -29,8 +30,8 @@ class CollectionController extends Controller
 public function update(Request $request, Collection $collection) {
     // Validate
     $validated = $request->validate([
-        'name' => ['required', 'string', 'max:255'],
-        'slug' => ['required', 'string', 'max:255', 'unique:collections,slug'. $collection->id],
+        'name' => ['required', 'string', 'max:255', Rule::unique('collections', 'name')->ignore($collection->id)],
+        'slug' => ['required', 'string', 'max:255', Rule::unique('collections', 'slug')->ignore($collection->id)],
         'description' => ['string', 'max:1000', 'nullable'],
         'imageurl' => ['nullable', 'string', 'max:1000'],
     ]);

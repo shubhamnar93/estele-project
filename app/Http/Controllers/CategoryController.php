@@ -5,13 +5,14 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Category;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Validation\Rule;
 
 class CategoryController extends Controller
 {
  public function store( Request $request): RedirectResponse
     {
         $validated = $request->validate([
-            'name' => ['required', 'string', 'max:255'],
+            'name' => ['required', 'string', 'max:255', 'unique:categories,name'],
             'slug' => ['required', 'string', 'max:255', 'unique:categories,slug'],
             'description' => ['string', 'max:1000'],
             'imageurl' => ['nullable', 'string', 'max:1000'],
@@ -25,8 +26,8 @@ public function update(Request $request, Category $category)
 {
     // Validate
     $validated = $request->validate([
-        'name' => ['required', 'string', 'max:255'],
-        'slug' => ['required', 'string', 'max:255', 'unique:categories,slug' . $category->id],
+        'name' => ['required', 'string', 'max:255', Rule::unique('categories', 'name')->ignore($category->id)],
+        'slug' => ['required', 'string', 'max:255', Rule::unique('categories', 'slug')->ignore($category->id)],
         'description' => ['string', 'max:1000'],
         'imageurl' => ['nullable', 'string', 'max:1000'],
     ]);
